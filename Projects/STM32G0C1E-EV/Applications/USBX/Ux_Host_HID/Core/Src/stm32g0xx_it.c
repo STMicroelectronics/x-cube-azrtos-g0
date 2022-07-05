@@ -20,9 +20,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32g0xx_it.h"
+#include "usbpd.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stm32g0c1e_eval_pwr.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -113,9 +113,39 @@ void USB_UCPD1_2_IRQHandler(void)
 
   /* USER CODE END USB_UCPD1_2_IRQn 0 */
   HAL_HCD_IRQHandler(&hhcd_USB_DRD_FS);
+  USBPD_PORT0_IRQHandler();
+
   /* USER CODE BEGIN USB_UCPD1_2_IRQn 1 */
 
   /* USER CODE END USB_UCPD1_2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 channel 2 and channel 3 interrupts.
+  */
+void DMA1_Channel2_3_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel2_3_IRQn 0 */
+
+  /* USER CODE END DMA1_Channel2_3_IRQn 0 */
+
+  /* USER CODE BEGIN DMA1_Channel2_3_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel2_3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 Ch4 to Ch7, DMA2 Ch1 to Ch5 and DMAMUX1 Overrun Interrupts.
+  */
+void DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 0 */
+
+  /* USER CODE END DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 0 */
+
+  /* USER CODE BEGIN DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 1 */
+
+  /* USER CODE END DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 1 */
 }
 
 /**
@@ -136,7 +166,7 @@ void TIM6_DAC_LPTIM1_IRQHandler(void)
 /**
   * @brief This function handles DMA1 channel 1 interrupt.
   */
-void ADCx_DMA_IRQHandler(void)
+void DMA1_Channel1_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
 
@@ -147,4 +177,3 @@ void ADCx_DMA_IRQHandler(void)
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 /* USER CODE END 1 */
-

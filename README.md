@@ -26,8 +26,8 @@ Azure RTOS is a professional grade, highly reliable and market proven Middleware
 
 One of the following toolchains:
 
-- IAR Embedded Workbench for ARM (EWARM) toolchain 8.50.6 + ST-LINKV3.
-- [STM32CubeIDE V1.7.0](https://www.st.com/en/development-tools/stm32cubeide.html)  + ST-LINKV3
+- IAR Embedded Workbench for ARM (EWARM) toolchain 8.50.9 + ST-LINKV3.
+- [STM32CubeIDE V1.9.0](https://www.st.com/en/development-tools/stm32cubeide.html)  + ST-LINKV3
 - RealView Microcontroller Development Kit (MDK-ARM) toolchain V5.32 + ST-LINKV3
 
 ## Supported Devices and Boards by applications
@@ -71,6 +71,8 @@ Details about the content of this release are available in the release note [her
 |ThreadX       | Tx_LowPower                      | It demonstrates how to configure the LowPower feature of Azure RTOS ThreadX stack. In addition, it shows how to use ThreadX MACRO related to the LowPower feature. [readme](./Projects/NUCLEO-G0B1RE/Applications/ThreadX/Tx_LowPower/README.md) |
 |ThreadX       | Tx_Thread_Sync                   | It demonstrates how to synchronize between threads using binary semaphores or mutexes. [readme](./Projects/STM32G0C1E-EV/Applications/ThreadX/Tx_Thread_Sync/README.md) |
 |ThreadX       | Tx_Thread_MsgQueue               | It demonstrates how to exchange message between threads using Message Queue API and how to handle message from different queues using oddt queue chaining feature. [readme](./Projects/NUCLEO-G0B1RE/Applications/ThreadX/Tx_Thread_MsgQueue/README.md) |
+|USBPD         | USBPD_SNK_UX_Device_HID_CDC_ACM  | It demonstrates how to develop a USBPD type C Consumer and USB Device using Azure RTOS USBX stack on STM32G0C1E-EV board. [readme](./Projects/STM32G0C1E-EV/Applications/USBPD/USBPD_SNK_UX_Device_HID_CDC_ACM/README.md) |
+|USBPD         | USBPD_SRC_UX_Host_MSC            | It demonstrates how to develop a USBPD type C Provider and USB Host using Azure RTOS USBX stack. It shows how to develop a USBPD type C Provider in the case of an USB host application based on Mass Storage "MSC" which is able to enumerate and communicates with a removable usb flash disk. [readme](./Projects/STM32G0C1E-EV/Applications/USBPD/USBPD_SRC_UX_Host_MSC/README.md) |
 |USBX          | Ux_Host_MSC                      | It demonstrates how to develop USB Host Mass Storage "MSC" able to enumerate and communicates with a removable usb flash disk. The application is designed to behave as an USB MSC Host able to operate with an USB flash disk using the Bulk Only Transfer (BOT) and Small Computer System Interface (SCSI) transparent commands combined with a file system AzureRTOS FileX. [readme](./Projects/STM32G0C1E-EV/Applications/USBX/Ux_Host_MSC/README.md) |
 |USBX          | Ux_Host_HID                      | It demonstrates how to develop USB Host Human Interface “HID” able to enumerate and communicates with a mouse or a keyboard. The application is designed to behave as an USB HID Host, the code provides required requests to properly enumerate HID devices , HID Class APIs to decode HID reports received from a mouse or a keyboard and display data on uart HyperTerminal. [readme](./Projects/STM32G0C1E-EV/Applications/USBX/Ux_Host_HID/README.md) |
 |USBX          | Ux_Device_CDC_ACM                | It demonstrates how to develop USB Device communication Class "CDC_ACM" based application. The application is designed to emulate an USB-to-UART bridge following the Virtual COM Port (VCP) implementation, the code provides all required device descriptors framework and associated Class descriptor report to build a compliant USB CDC_ACM device. [readme](./Projects/STM32G0C1E-EV/Applications/USBX/Ux_Device_CDC_ACM/README.md). |

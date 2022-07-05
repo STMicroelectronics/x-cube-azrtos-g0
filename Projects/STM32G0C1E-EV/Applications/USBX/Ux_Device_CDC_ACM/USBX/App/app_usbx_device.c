@@ -48,8 +48,14 @@ TX_THREAD                          ux_app_thread;
 TX_THREAD                          ux_cdc_read_thread;
 TX_THREAD                          ux_cdc_write_thread;
 TX_EVENT_FLAGS_GROUP               EventFlag;
+/* ux app msg queue */
+TX_QUEUE     ux_app_MsgQueue;
 UX_SLAVE_CLASS_CDC_ACM_PARAMETER   cdc_acm_parameter;
 extern PCD_HandleTypeDef           hpcd_USB_DRD_FS;
+#if defined ( __ICCARM__ ) /* IAR Compiler */
+  #pragma data_alignment=4
+#endif /* defined ( __ICCARM__ ) */
+__ALIGN_BEGIN USB_MODE_STATE                            Event_Msg __ALIGN_END;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -186,6 +192,22 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
   {
     return TX_GROUP_ERROR;
   }
+
+  /* Allocate Memory for the Queue */
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                       sizeof(APP_QUEUE_SIZE*sizeof(ULONG)),
+                       TX_NO_WAIT) != TX_SUCCESS)
+  {
+    ret = TX_POOL_ERROR;
+  }
+
+  /* Create the MsgQueue */
+  if (tx_queue_create(&ux_app_MsgQueue, "Message Queue app",
+                      TX_1_ULONG, pointer,
+                      APP_QUEUE_SIZE*sizeof(ULONG)) != TX_SUCCESS)
+  {
+    ret = TX_QUEUE_ERROR;
+  }
   /* USER CODE END MX_USBX_Device_Init */
 
   return ret;
@@ -201,6 +223,36 @@ void usbx_app_thread_entry(ULONG arg)
 {
   /* Initialization of USB device */
   MX_USB_Device_Init();
+
+  /* Wait for message queue to start/stop the device */
+  while(1)
+  {
+    /* Wait for a device to be connected */
+    if (tx_queue_receive(&ux_app_MsgQueue, &Event_Msg,
+                         TX_WAIT_FOREVER)!= TX_SUCCESS)
+    {
+      /*Error*/
+      Error_Handler();
+    }
+    /* Check if received message equal to USB_PCD_START */
+    if (Event_Msg == START_USB_DEVICE)
+    {
+      /* Start device USB */
+      HAL_PCD_Start(&hpcd_USB_DRD_FS);
+    }
+    /* Check if received message equal to USB_PCD_STOP */
+    else if (Event_Msg == STOP_USB_DEVICE)
+    {
+      /* Stop device USB */
+      HAL_PCD_Stop(&hpcd_USB_DRD_FS);
+    }
+    /* Else Error */
+    else
+    {
+      /*Error*/
+      Error_Handler();
+    }
+  }
 }
 
 /**
@@ -228,8 +280,6 @@ void MX_USB_Device_Init(void)
   /* initialize the device controller driver */
   ux_dcd_stm32_initialize((ULONG)USB_DRD_FS, (ULONG)&hpcd_USB_DRD_FS);
 
-  /* Start the USB device */
-  HAL_PCD_Start(&hpcd_USB_DRD_FS);
 
   /* USER CODE BEGIN USB_Device_Init_PostTreatment */
   /* USER CODE END USB_Device_Init_PostTreatment */

@@ -10,6 +10,17 @@
   *           + Peripheral Control functions
   *           + Peripheral State functions
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
   ==============================================================================
                     ##### How to use this driver #####
@@ -39,17 +50,6 @@
          (##) HAL_PCD_Start();
 
   @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
 
@@ -1734,6 +1734,10 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
   uint16_t TxPctSize;
   uint8_t epindex;
 
+#if (USE_USB_DOUBLE_BUFFER != 1U)
+  count = 0U;
+#endif /* USE_USB_DOUBLE_BUFFER */
+
   /* stay in loop while pending interrupts */
   while ((hpcd->Instance->ISTR & USB_ISTR_CTR) != 0U)
   {
@@ -1821,7 +1825,9 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
           }
 
-          if ((PCD_GET_ENDPOINT(hpcd->Instance, PCD_ENDP0) & USB_EP_SETUP) == 0U)
+          wEPVal = (uint16_t)PCD_GET_ENDPOINT(hpcd->Instance, PCD_ENDP0);
+
+          if (((wEPVal & USB_EP_SETUP) == 0U) && ((wEPVal & USB_EP_RX_STRX) != USB_EP_RX_VALID))
           {
             PCD_SET_EP_RX_CNT(hpcd->Instance, PCD_ENDP0, ep->maxpacket);
             PCD_SET_EP_RX_STATUS(hpcd->Instance, PCD_ENDP0, USB_EP_RX_VALID);
@@ -1914,7 +1920,7 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
         /* clear int flag */
         PCD_CLEAR_TX_EP_CTR(hpcd->Instance, epindex);
 
-        if (ep->type != EP_TYPE_BULK)
+        if (ep->type == EP_TYPE_ISOC)
         {
           ep->xfer_len = 0U;
 
@@ -1941,7 +1947,7 @@ static HAL_StatusTypeDef PCD_EP_ISR_Handler(PCD_HandleTypeDef *hpcd)
         }
         else
         {
-          /* Manage Bulk Single Buffer Transaction */
+          /* Manage Single Buffer Transaction */
           if ((wEPVal & USB_EP_KIND) == 0U)
           {
             /* multi-packet on the NON control IN endpoint */
@@ -2255,5 +2261,3 @@ static HAL_StatusTypeDef HAL_PCD_EP_DB_Transmit(PCD_HandleTypeDef *hpcd,
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

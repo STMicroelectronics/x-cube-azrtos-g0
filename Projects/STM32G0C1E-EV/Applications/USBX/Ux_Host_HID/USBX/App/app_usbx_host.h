@@ -36,7 +36,7 @@ extern "C" {
 #include "ux_host_class_hid.h"
 #include "ux_host_class_hid_mouse.h"
 #include "ux_host_class_hid_keyboard.h"
-#include "stm32g0c1e_eval_pwr.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -66,6 +66,7 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr);
 UINT  MX_USB_Host_Init(void);
 void  USBH_DriverVBUS(uint8_t state);
 void  usbx_app_thread_entry(ULONG arg);
+void  ucpd_app_thread_entry(ULONG arg);
 void  hid_mouse_thread_entry(ULONG arg);
 void  hid_keyboard_thread_entry(ULONG arg);
 VOID  ux_host_error_callback(UINT system_level, UINT system_context, UINT error_code);
@@ -106,6 +107,11 @@ typedef struct
   Device_state    Dev_state;
 } ux_app_devInfotypeDef;
 
+typedef enum
+{
+  STOP_USB_HOST = 1,
+  START_USB_HOST,
+} USB_MODE_STATE;
 /* USER CODE END 1 */
 
 #ifdef __cplusplus

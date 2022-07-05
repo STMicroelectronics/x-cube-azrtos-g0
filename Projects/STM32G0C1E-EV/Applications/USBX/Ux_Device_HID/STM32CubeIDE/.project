@@ -47,6 +47,16 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal.c</locationURI>
 		</link>
 		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_adc_ex.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc_ex.c</locationURI>
+		</link>
+		<link>
 			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_cortex.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_cortex.c</locationURI>
@@ -80,6 +90,11 @@
 			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_gpio.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_gpio.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_lptim.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_lptim.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_hal_pcd.c</name>
@@ -122,9 +137,29 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim_ex.c</locationURI>
 		</link>
 		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_adc.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_adc.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_crs.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_crs.c</locationURI>
+		</link>
+		<link>
 			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_dma.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_dma.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_exti.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_exti.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_gpio.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_gpio.c</locationURI>
 		</link>
 		<link>
 			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_rcc.c</name>
@@ -132,9 +167,54 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_rcc.c</locationURI>
 		</link>
 		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_tim.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_tim.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_ucpd.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_ucpd.c</locationURI>
+		</link>
+		<link>
 			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_usb.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_usb.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/STM32G0xx_HAL_Driver/stm32g0xx_ll_utils.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_utils.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBPD/usbpd_cad_hw_if.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_cad_hw_if.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBPD/usbpd_hw.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_hw.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBPD/usbpd_hw_if_it.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_hw_if_it.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBPD/usbpd_phy_hw_if.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_phy_hw_if.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBPD/usbpd_pwr_hw_if.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_pwr_hw_if.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBPD/usbpd_trace.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/Core/app_threadx.c</name>
@@ -167,9 +247,49 @@
 			<locationURI>PARENT-1-PROJECT_LOC/Core/Src/tx_initialize_low_level.S</locationURI>
 		</link>
 		<link>
+			<name>Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval.c</locationURI>
+		</link>
+		<link>
+			<name>Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval_pwr.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval_pwr.c</locationURI>
+		</link>
+		<link>
 			<name>Application/User/AZURE_RTOS/App/app_azure_rtos.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/AZURE_RTOS/App/app_azure_rtos.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd_dpm_core.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_dpm_core.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd_pwr_if.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_pwr_if.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/App/usbpd_usb_if.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/App/usbpd_usb_if.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/Target/usbpd_dpm_user.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_dpm_user.c</locationURI>
+		</link>
+		<link>
+			<name>Application/User/USBPD/Target/usbpd_pwr_user.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/USBPD/Target/usbpd_pwr_user.c</locationURI>
 		</link>
 		<link>
 			<name>Application/User/USBX/App/app_usbx_device.c</name>
@@ -1022,6 +1142,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_system_initialize.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/USBX/USB/USBX/CoreSystem/ux_system_tasks_run.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_system_tasks_run.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/USBX/USB/USBX/CoreSystem/ux_system_uninitialize.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_system_uninitialize.c</locationURI>
@@ -1342,6 +1467,36 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_interrupt_thread.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_read.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_read.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_receiver_event_free.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_event_free.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_receiver_event_get.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_event_get.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_receiver_initialize.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_initialize.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_receiver_thread.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_thread.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_receiver_uninitialize.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_uninitialize.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_report_get.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_report_get.c</locationURI>
@@ -1350,6 +1505,11 @@
 			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_report_set.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_report_set.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_tasks_run.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/USB/USBX/UX Device Class HID/ux_device_class_hid_uninitialize.c</name>
@@ -1412,9 +1572,19 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_interrupt_handler.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Controllers/ux_dcd_stm32_transfer_abort.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_abort.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/USBX/USB/USBX/UX Device Controllers/ux_dcd_stm32_transfer_request.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_request.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device Controllers/ux_dcd_stm32_transfer_run.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_run.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/USB/USBX/UX Device Controllers/ux_dcd_stm32_uninitialize.c</name>
@@ -1522,6 +1692,11 @@
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device CoreStack/ux_device_stack_tasks_run.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_device_stack_tasks_run.c</locationURI>
+		</link>
+		<link>
 			<name>Middlewares/USBX/USB/USBX/UX Device CoreStack/ux_device_stack_transfer_abort.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_abort.c</locationURI>
@@ -1535,6 +1710,11 @@
 			<name>Middlewares/USBX/USB/USBX/UX Device CoreStack/ux_device_stack_transfer_request.c</name>
 			<type>1</type>
 			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/USBX/USB/USBX/UX Device CoreStack/ux_device_stack_transfer_run.c</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_run.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/USBX/USB/USBX/UX Device CoreStack/ux_device_stack_uninitialize.c</name>

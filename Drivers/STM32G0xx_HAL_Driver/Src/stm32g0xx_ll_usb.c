@@ -11,6 +11,17 @@
   *           + Peripheral Control functions
   *           + Peripheral State functions
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
   ==============================================================================
                     ##### How to use this driver #####
@@ -23,17 +34,7 @@
       (#) The upper HAL HCD/PCD driver will call the right routines for its internal processes.
 
   @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
+
   ******************************************************************************
   */
 
@@ -268,8 +269,16 @@ HAL_StatusTypeDef USB_ActivateEndpoint(USB_DRD_TypeDef *USBx, USB_DRD_EPTypeDef 
       PCD_SET_EP_RX_CNT(USBx, ep->num, ep->maxpacket);
       PCD_CLEAR_RX_DTOG(USBx, ep->num);
 
-      /* Configure VALID status for the Endpoint */
-      PCD_SET_EP_RX_STATUS(USBx, ep->num, USB_EP_RX_VALID);
+      if (ep->num == 0U)
+      {
+        /* Configure VALID status for EP0 */
+        PCD_SET_EP_RX_STATUS(USBx, ep->num, USB_EP_RX_VALID);
+      }
+      else
+      {
+        /* Configure NAK status for OUT Endpoint */
+        PCD_SET_EP_RX_STATUS(USBx, ep->num, USB_EP_RX_NAK);
+      }
     }
   }
 #if (USE_USB_DOUBLE_BUFFER == 1U)
@@ -767,9 +776,9 @@ HAL_StatusTypeDef  USB_DevDisconnect(USB_DRD_TypeDef *USBx)
 /**
   * @brief  USB_ReadInterrupts return the global USB interrupt status
   * @param  USBx Selected device
-  * @retval HAL status
+  * @retval USB Global Interrupt status
   */
-uint32_t  USB_ReadInterrupts(USB_DRD_TypeDef *USBx)
+uint32_t USB_ReadInterrupts(USB_DRD_TypeDef *USBx)
 {
   uint32_t tmpreg;
 
@@ -812,7 +821,7 @@ HAL_StatusTypeDef USB_DeActivateRemoteWakeup(USB_DRD_TypeDef *USBx)
 void USB_WritePMA(USB_DRD_TypeDef *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAddr, uint16_t wNBytes)
 {
   UNUSED(USBx);
-  uint32_t tmp;
+  uint32_t WrVal;
   uint32_t count;
   __IO uint32_t *pdwVal;
   uint32_t NbWords = ((uint32_t)wNBytes + 3U) >> 2U;
@@ -844,17 +853,17 @@ void USB_WritePMA(USB_DRD_TypeDef *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAddr
   /* When Number of data is not word aligned, write the remaining Byte */
   if (remaining_bytes != 0U)
   {
-    tmp = 0U;
+    WrVal = 0U;
 
     do
     {
-      tmp = tmp | ((uint32_t)(*(uint8_t *)pBuf) << (8U * count));
+      WrVal |= (uint32_t)(*(uint8_t *)pBuf) << (8U * count);
       count++;
       pBuf++;
       remaining_bytes--;
     } while (remaining_bytes != 0U);
 
-    *pdwVal = tmp;
+    *pdwVal = WrVal;
   }
 }
 
@@ -870,7 +879,7 @@ void USB_ReadPMA(USB_DRD_TypeDef *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAddr,
 {
   UNUSED(USBx);
   uint32_t count;
-  uint32_t tmp;
+  uint32_t RdVal;
   __IO uint32_t *pdwVal;
   uint32_t NbWords = ((uint32_t)wNBytes + 3U) >> 2U;
   /*Due to the PMA access 32bit only so the last non word data should be processed alone */
@@ -901,10 +910,11 @@ void USB_ReadPMA(USB_DRD_TypeDef *USBx, uint8_t *pbUsrBuf, uint16_t wPMABufAddr,
   /*When Number of data is not word aligned, read the remaining byte*/
   if (remaining_bytes != 0U)
   {
-    tmp = *(__IO uint32_t *)pdwVal;
+    RdVal = *(__IO uint32_t *)pdwVal;
+
     do
     {
-      *(uint8_t *)pBuf = (uint8_t)(tmp >> (8U * (uint8_t)(count)));
+      *(uint8_t *)pBuf = (uint8_t)(RdVal >> (8U * (uint8_t)(count)));
       count++;
       pBuf++;
       remaining_bytes--;
@@ -1091,8 +1101,8 @@ HAL_StatusTypeDef USB_HC_Init(USB_DRD_TypeDef *USBx, uint8_t phy_ch_num,
   wChRegVal |= (((uint32_t)dev_address << USB_CHEP_DEVADDR_Pos) |
                 ((uint32_t)epnum & 0x0FU));
 
-   /* Get Host core Speed */
-   HostCoreSpeed = USB_GetHostSpeed(USBx);
+  /* Get Host core Speed */
+  HostCoreSpeed = USB_GetHostSpeed(USBx);
 
   /* Set the device speed in case using HUB FS with device LS */
   if ((speed == USB_DRD_SPEED_LS) && (HostCoreSpeed == USB_DRD_SPEED_FS))
@@ -1235,9 +1245,9 @@ static HAL_StatusTypeDef USB_HC_ISO_DB_StartXfer(USB_DRD_TypeDef *USBx,
   {
     /* DTOGTX=0 */
     /* Set the Double buffer counter for pmabuffer0 */
-    USB_DRD_SET_CHEP_DBUF1_CNT(USBx, phy_ch_num,1U, len);
+    USB_DRD_SET_CHEP_DBUF1_CNT(USBx, phy_ch_num, 1U, len);
     USB_WritePMA(USBx, hc->xfer_buff, hc->pmaaddr1, (uint16_t)len);
-    }
+  }
 
   return HAL_OK;
 }
@@ -1386,5 +1396,3 @@ HAL_StatusTypeDef USB_StopHost(USB_DRD_TypeDef *USBx)
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

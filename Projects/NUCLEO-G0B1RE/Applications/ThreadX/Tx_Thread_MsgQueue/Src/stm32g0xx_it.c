@@ -133,4 +133,3 @@ void USART2_LPUART2_IRQHandler(void)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

@@ -1,5 +1,5 @@
 
-## <b>Ux_Device_HID application description</b>
+## <b>Ux_Device_HID Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage on STM32G0C1E-EV board,
 it shows how to develop USB Device Human Interface "HID" mouse based application.
@@ -13,6 +13,10 @@ are initialized, the HID Class driver is registered and the application creates 
   - usbx_app_thread_entry (Prio : 20; PreemptionPrio : 20) used to initialize USB DRD HAL PCD driver and start the device.
   - usbx_hid_thread_entry (Prio : 20; PreemptionPrio : 20) used to send HID reports to move automatically the PC host machine cursor.
 
+The thread usbx_app_thread_entry is responsible to start or stop the USB device.
+At Run mode the thread will be waiting on message queue form USB_PD interface, when the USB device is plugged to host PC
+a callback in USB_PD interface will send a message to usbx_app_thread_entry to start the USB device.
+By the same way when the USB device is unplug a callback in USB_PD interface will send a message to usbx_app_thread_entry to stop the USB device.
 To customize the HID application by sending the mouse position step by step every 10ms.
 For each 10ms, the application calls the GetPointerData() API to update the mouse position (x, y) and send
 the report buffer through the ux_device_class_hid_event_set() API.
@@ -36,6 +40,8 @@ User is familiar with USB 2.0 "Universal Serial BUS" Specification and HID class
 #### <b>Known limitations</b>
 
 The remote wakeup feature is not yet implemented (used to bring the USB suspended bus back to the active condition).
+
+### <b>Notes</b>
 
 #### <b>ThreadX usage hints</b>
 
@@ -76,10 +82,11 @@ The remote wakeup feature is not yet implemented (used to bring the USB suspende
        Read more in STM32CubeIDE User Guide, chapter: "Linker script".
 
     + The "tx_initialize_low_level.S" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
+#### <b>USBX usage hints</b>
 
 ### <b>Keywords</b>
 
-RTOS, ThreadX, USBX, USBXDevice, USB_DRD, Full Speed, HID, Mouse.
+RTOS, ThreadX, USBX, USBXDevice, USB_DRD, Full Speed, HID, Mouse, USBPD
 
 ### <b>Hardware and Software environment</b>
 

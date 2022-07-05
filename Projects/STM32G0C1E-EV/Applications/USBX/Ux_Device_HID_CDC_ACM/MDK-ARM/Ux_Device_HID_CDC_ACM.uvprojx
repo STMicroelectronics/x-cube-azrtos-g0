@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="project_projx.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_projx.xsd">
+
   <SchemaVersion>2.1</SchemaVersion>
+
   <Header>### uVision Project, (C) Keil Software</Header>
+
   <Targets>
     <Target>
       <TargetName>Ux_Device_HID_CDC_ACM</TargetName>
@@ -13,31 +16,31 @@
         <TargetCommonOption>
           <Device>STM32G0C1VETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32G0xx_DFP.1.3.0</PackID>
+          <PackID>Keil.STM32G0xx_DFP.1.4.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
-          <Cpu>IRAM(0x20000000-0x20023FFF) IROM(0x8000000-0x807FFFF)  CLOCK(8000000) CPUTYPE("Cortex-M0+") TZ</Cpu>
-          <FlashUtilSpec />
-          <StartupFile />
-          <FlashDriverDll />
+          <Cpu>IRAM(0x20000000-0x20023FFF) IROM(0x8000000-0x807FFFF) CLOCK(8000000) CPUTYPE("Cortex-M0+") TZ</Cpu>
+          <FlashUtilSpec></FlashUtilSpec>
+          <StartupFile></StartupFile>
+          <FlashDriverDll></FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile />
-          <MemoryEnv />
-          <Cmp />
-          <Asm />
-          <Linker />
-          <OHString />
-          <InfinionOptionDll />
-          <SLE66CMisc />
-          <SLE66AMisc />
-          <SLE66LinkerMisc />
+          <RegisterFile></RegisterFile>
+          <MemoryEnv></MemoryEnv>
+          <Cmp></Cmp>
+          <Asm></Asm>
+          <Linker></Linker>
+          <OHString></OHString>
+          <InfinionOptionDll></InfinionOptionDll>
+          <SLE66CMisc></SLE66CMisc>
+          <SLE66AMisc></SLE66AMisc>
+          <SLE66LinkerMisc></SLE66LinkerMisc>
           <SFDFile>$$Device:STM32G0C1VETx$CMSIS\SVD\STM32G0C1.svd</SFDFile>
           <bCustSvd>0</bCustSvd>
           <UseEnv>0</UseEnv>
-          <BinPath />
-          <IncludePath />
-          <LibPath />
-          <RegisterFilePath />
-          <DBRegisterFilePath />
+          <BinPath></BinPath>
+          <IncludePath></IncludePath>
+          <LibPath></LibPath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -52,15 +55,15 @@
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath />
+          <ListingPath></ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
           <BeforeCompile>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name />
-            <UserProg2Name />
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopU1X>0</nStopU1X>
@@ -69,8 +72,8 @@
           <BeforeMake>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name />
-            <UserProg2Name />
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopB1X>0</nStopB1X>
@@ -79,15 +82,15 @@
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name />
-            <UserProg2Name />
+            <UserProg1Name></UserProg1Name>
+            <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
             <nStopA1X>0</nStopA1X>
             <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
-          <SVCSIdString />
+          <SVCSIdString></SVCSIdString>
         </TargetCommonOption>
         <CommonProperty>
           <UseCPPCompiler>0</UseCPPCompiler>
@@ -101,8 +104,8 @@
           <AssembleAssemblyFile>0</AssembleAssemblyFile>
           <PublicsOnly>0</PublicsOnly>
           <StopOnExitCode>3</StopOnExitCode>
-          <CustomArgument />
-          <IncludeLibraryModules />
+          <CustomArgument></CustomArgument>
+          <IncludeLibraryModules></IncludeLibraryModules>
           <ComprImg>0</ComprImg>
         </CommonProperty>
         <DllOption>
@@ -111,7 +114,7 @@
           <SimDlgDll>DARMCM1.DLL</SimDlgDll>
           <SimDlgDllArguments>-pCM0+</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments />
+          <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM0+</TargetDlgDllArguments>
         </DllOption>
@@ -135,11 +138,11 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2V8M.DLL</Flash2>
-          <Flash3 />
-          <Flash4 />
-          <pFcarmOut />
-          <pFcarmGrp />
-          <pFcArmRoot />
+          <Flash3></Flash3>
+          <Flash4></Flash4>
+          <pFcarmOut></pFcarmOut>
+          <pFcarmGrp></pFcarmGrp>
+          <pFcArmRoot></pFcArmRoot>
           <FcArmLst>0</FcArmLst>
         </Utilities>
         <TargetArmAds>
@@ -172,7 +175,7 @@
             <RvctClst>0</RvctClst>
             <GenPPlst>0</GenPPlst>
             <AdsCpuType>"Cortex-M0+"</AdsCpuType>
-            <RvctDeviceName />
+            <RvctDeviceName></RvctDeviceName>
             <mOS>0</mOS>
             <uocRom>0</uocRom>
             <uocRam>0</uocRam>
@@ -186,7 +189,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>1</useUlib>
+            <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -203,7 +206,7 @@
             <Ro2Chk>0</Ro2Chk>
             <Ro3Chk>0</Ro3Chk>
             <Ir1Chk>1</Ir1Chk>
-            <Ir2Chk>0</Ir2Chk>
+            <Ir2Chk>1</Ir2Chk>
             <Ra1Chk>0</Ra1Chk>
             <Ra2Chk>0</Ra2Chk>
             <Ra3Chk>0</Ra3Chk>
@@ -306,7 +309,7 @@
                 <Size>0x0</Size>
               </OCR_RVCT10>
             </OnChipMemories>
-            <RvctStartVector />
+            <RvctStartVector></RvctStartVector>
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
@@ -333,10 +336,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls />
-              <Define>TX_INCLUDE_USER_DEFINE_FILE,UX_INCLUDE_USER_DEFINE_FILE,USE_HAL_DRIVER,STM32G0C1xx</Define>
-              <Undefine />
-              <IncludePath>../Core/Inc; ../AZURE_RTOS/App; ../USBX/App; ../USBX/Target; ../../../../../../Drivers/STM32G0xx_HAL_Driver/Inc; ../../../../../../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy; ../../../../../../Drivers/CMSIS/Device/ST/STM32G0xx/Include; ../../../../../../Drivers/CMSIS/Include; ../../../../../../Middlewares/ST/usbx/common/core/inc/; ../../../../../../Middlewares/ST/usbx/ports/generic/inc/; ../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/inc/; ../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/; ../../../../../../Middlewares/ST/threadx/common/inc/; ../../../../../../Middlewares/ST/threadx/ports/cortex_m0/ac6/inc/</IncludePath>
+              <MiscControls></MiscControls>
+              <Define>USE_FULL_LL_DRIVER,USBPD_PORT_COUNT=1,_SNK,USBPDCORE_LIB_NO_PD,TX_INCLUDE_USER_DEFINE_FILE,UX_INCLUDE_USER_DEFINE_FILE,USE_HAL_DRIVER,STM32G0C1xx</Define>
+              <Undefine></Undefine>
+              <IncludePath>../Core/Inc;../AZURE_RTOS/App;../USBX/App;../USBX/Target;../USBPD/App;../USBPD/Target;../../../../../../Drivers/STM32G0xx_HAL_Driver/Inc;../../../../../../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy;../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc;../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/inc;../../../../../../Drivers/CMSIS/Device/ST/STM32G0xx/Include;../../../../../../Drivers/CMSIS/Include;../../../../../../Middlewares/ST/usbx/common/core/inc/;../../../../../../Middlewares/ST/usbx/ports/generic/inc/;../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/inc/;../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/;../../../../../../Middlewares/ST/threadx/common/inc/;../../../../../../Middlewares/ST/threadx/ports/cortex_m0/ac6/inc/;../../../../../../Drivers/BSP/STM32G0C1E-EV</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,10 +354,10 @@
             <useXO>0</useXO>
             <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
-              <MiscControls />
-              <Define />
-              <Undefine />
-              <IncludePath />
+              <MiscControls></MiscControls>
+              <Define></Define>
+              <Undefine></Undefine>
+              <IncludePath></IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -364,15 +367,15 @@
             <noStLib>0</noStLib>
             <RepFail>1</RepFail>
             <useFile>0</useFile>
-            <TextAddressRange />
-            <DataAddressRange />
-            <pXoBase />
-            <ScatterFile />
-            <IncludeLibs />
-            <IncludeLibsPath />
-            <Misc />
-            <LinkerInputFile />
-            <DisabledWarnings />
+            <TextAddressRange></TextAddressRange>
+            <DataAddressRange></DataAddressRange>
+            <pXoBase></pXoBase>
+            <ScatterFile></ScatterFile>
+            <IncludeLibs></IncludeLibs>
+            <IncludeLibsPath></IncludeLibsPath>
+            <Misc></Misc>
+            <LinkerInputFile></LinkerInputFile>
+            <DisabledWarnings></DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -423,6 +426,46 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Application/User/USBPD/Target</GroupName>
+          <Files>
+            <File>
+              <FileName>usbpd_dpm_user.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBPD/Target/usbpd_dpm_user.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_pwr_user.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBPD/Target/usbpd_pwr_user.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Application/User/USBPD/App</GroupName>
+          <Files>
+            <File>
+              <FileName>usbpd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBPD/App/usbpd.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_pwr_if.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBPD/App/usbpd_pwr_if.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_dpm_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBPD/App/usbpd_dpm_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_usb_if.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../USBPD/App/usbpd_usb_if.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Application/User/USBX/App</GroupName>
           <Files>
             <File>
@@ -468,8 +511,38 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>Drivers/BSP/STM32G0C1E-EV</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32g0c1e_eval.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0c1e_eval_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval_pwr.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>Drivers/STM32G0xx_HAL_Driver</GroupName>
           <Files>
+            <File>
+              <FileName>stm32g0xx_hal_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0xx_hal_adc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0xx_ll_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_adc.c</FilePath>
+            </File>
             <File>
               <FileName>stm32g0xx_hal_rcc.c</FileName>
               <FileType>1</FileType>
@@ -541,6 +614,26 @@
               <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_exti.c</FilePath>
             </File>
             <File>
+              <FileName>stm32g0xx_ll_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0xx_ll_exti.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_exti.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0xx_ll_crs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_crs.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0xx_hal_lptim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_lptim.c</FilePath>
+            </File>
+            <File>
               <FileName>stm32g0xx_hal_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim.c</FilePath>
@@ -549,6 +642,16 @@
               <FileName>stm32g0xx_hal_tim_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0xx_ll_ucpd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_ucpd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32g0xx_ll_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_gpio.c</FilePath>
             </File>
             <File>
               <FileName>stm32g0xx_hal_uart.c</FileName>
@@ -575,6 +678,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_usb.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32g0xx_ll_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_tim.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -584,6 +692,46 @@
               <FileName>system_stm32g0xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/system_stm32g0xx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Middlewares/USBPD</GroupName>
+          <Files>
+            <File>
+              <FileName>USBPDCORE_NOPD_CM0PLUS_Keil.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/lib/USBPDCORE_NOPD_CM0PLUS_Keil.lib</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_cad_hw_if.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_cad_hw_if.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_hw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_hw.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_hw_if_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_hw_if_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_phy_hw_if.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_phy_hw_if.c</FilePath>
+            </File>
+            <File>
+              <FileName>usbpd_pwr_hw_if.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_pwr_hw_if.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -691,6 +839,11 @@
               <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_set_feature.c</FilePath>
             </File>
             <File>
+              <FileName>ux_device_stack_tasks_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_tasks_run.c</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_stack_transfer_abort.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_abort.c</FilePath>
@@ -704,6 +857,11 @@
               <FileName>ux_device_stack_transfer_request.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_request.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_stack_transfer_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_run.c</FilePath>
             </File>
             <File>
               <FileName>ux_device_stack_uninitialize.c</FileName>
@@ -761,6 +919,36 @@
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_interrupt_thread.c</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_hid_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid_receiver_event_free.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_event_free.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid_receiver_event_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_event_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid_receiver_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid_receiver_thread.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_thread.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid_receiver_uninitialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_uninitialize.c</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_class_hid_report_get.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_report_get.c</FilePath>
@@ -769,6 +957,11 @@
               <FileName>ux_device_class_hid_report_set.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_report_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid_tasks_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c</FilePath>
             </File>
             <File>
               <FileName>ux_device_class_hid_uninitialize.c</FileName>
@@ -1061,6 +1254,11 @@
               <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_initialize.c</FilePath>
             </File>
             <File>
+              <FileName>ux_system_tasks_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_tasks_run.c</FilePath>
+            </File>
+            <File>
               <FileName>ux_system_uninitialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_uninitialize.c</FilePath>
@@ -1126,9 +1324,19 @@
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_interrupt_handler.c</FilePath>
             </File>
             <File>
+              <FileName>ux_dcd_stm32_transfer_abort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_abort.c</FilePath>
+            </File>
+            <File>
               <FileName>ux_dcd_stm32_transfer_request.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_request.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_dcd_stm32_transfer_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_run.c</FilePath>
             </File>
             <File>
               <FileName>ux_dcd_stm32_uninitialize.c</FileName>
@@ -1186,6 +1394,16 @@
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_read.c</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_cdc_acm_read_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_read_run.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_cdc_acm_tasks_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_tasks_run.c</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_class_cdc_acm_unitialize.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_unitialize.c</FilePath>
@@ -1194,6 +1412,11 @@
               <FileName>ux_device_class_cdc_acm_write.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_cdc_acm_write_run.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write_run.c</FilePath>
             </File>
             <File>
               <FileName>ux_device_class_cdc_acm_write_with_callback.c</FileName>
@@ -2038,31 +2261,33 @@
       </Groups>
     </Target>
   </Targets>
+
   <RTE>
-    <apis />
+    <apis/>
     <components>
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0" />
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
         <targetInfos>
-          <targetInfo name="Ux_Device_HID_CDC_ACM" />
+          <targetInfo name="Ux_Device_HID_CDC_ACM"/>
         </targetInfos>
       </component>
     </components>
-    <files />
+    <files/>
   </RTE>
+
   <LayerInfo>
     <Layers>
       <Layer>
         <LayName>&lt;Project Info&gt;</LayName>
-        <LayDesc />
-        <LayUrl />
-        <LayKeys />
-        <LayCat />
-        <LayLic />
+        <LayDesc></LayDesc>
+        <LayUrl></LayUrl>
+        <LayKeys></LayKeys>
+        <LayCat></LayCat>
+        <LayLic></LayLic>
         <LayTarg>0</LayTarg>
         <LayPrjMark>1</LayPrjMark>
       </Layer>
     </Layers>
   </LayerInfo>
-</Project>
 
+</Project>

@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "app_threadx.h"
+#include "usbpd.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -46,7 +47,8 @@ DMA_HandleTypeDef hdma_usart3_tx;
 PCD_HandleTypeDef hpcd_USB_DRD_FS;
 
 /* USER CODE BEGIN PV */
-
+ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,11 +93,15 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
+  /* Call PreOsInit function */
+  USBPD_PreInitOs();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
+
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -120,6 +126,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -139,6 +146,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -151,9 +159,11 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Enable the SYSCFG APB clock
   */
   __HAL_RCC_CRS_CLK_ENABLE();
+
   /** Configures CRS
   */
   pInit.Prescaler = RCC_CRS_SYNC_DIV1;
@@ -262,8 +272,11 @@ static void MX_DMA_Init(void)
 
   /* DMA interrupt init */
   /* DMA1_Channel2_3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 2, 0);
+  HAL_NVIC_SetPriority(DMA1_Channel2_3_IRQn, 3, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel2_3_IRQn);
+  /* DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn, 3, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn);
 
 }
 
@@ -278,8 +291,9 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_8, GPIO_PIN_SET);
@@ -299,7 +313,7 @@ static void MX_GPIO_Init(void)
 
 /**
   * @brief  Period elapsed callback in non blocking mode
-  * @note   This function is called  when TIM6 interrupt took place, inside
+  * @note   This function is called  when TIM7 interrupt took place, inside
   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
   * a global variable "uwTick" used as application time base.
   * @param  htim : TIM handle
@@ -310,7 +324,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 0 */
 
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM6) {
+  if (htim->Instance == TIM7) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
@@ -354,4 +368,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

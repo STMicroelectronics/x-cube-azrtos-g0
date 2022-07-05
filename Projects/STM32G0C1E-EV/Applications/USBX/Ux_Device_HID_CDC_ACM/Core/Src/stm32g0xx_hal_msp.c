@@ -96,6 +96,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE BEGIN USART3_MspInit 0 */
 
   /* USER CODE END USART3_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART3;
@@ -122,7 +123,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
     /* USART3 DMA Init */
     /* USART3_TX Init */
-    hdma_usart3_tx.Instance = DMA1_Channel2;
+    hdma_usart3_tx.Instance = DMA1_Channel3;
     hdma_usart3_tx.Init.Request = DMA_REQUEST_USART3_TX;
     hdma_usart3_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_usart3_tx.Init.PeriphInc = DMA_PINC_DISABLE;
@@ -196,6 +197,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
   /* USER CODE BEGIN USB_DRD_FS_MspInit 0 */
 
   /* USER CODE END USB_DRD_FS_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
@@ -220,7 +222,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
       HAL_PWREx_EnableVddUSB();
     }
     /* USB_DRD_FS interrupt Init */
-    HAL_NVIC_SetPriority(USB_UCPD1_2_IRQn, 1, 0);
+    HAL_NVIC_SetPriority(USB_UCPD1_2_IRQn, 2, 0);
     HAL_NVIC_EnableIRQ(USB_UCPD1_2_IRQn);
   /* USER CODE BEGIN USB_DRD_FS_MspInit 1 */
 
@@ -246,7 +248,14 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* hpcd)
     __HAL_RCC_USB_CLK_DISABLE();
 
     /* USB_DRD_FS interrupt DeInit */
-    HAL_NVIC_DisableIRQ(USB_UCPD1_2_IRQn);
+  /* USER CODE BEGIN USB_DRD_FS:USB_UCPD1_2_IRQn disable */
+    /**
+    * Uncomment the line below to disable the "USB_UCPD1_2_IRQn" interrupt
+    * Be aware, disabling shared interrupt may affect other IPs
+    */
+    /* HAL_NVIC_DisableIRQ(USB_UCPD1_2_IRQn); */
+  /* USER CODE END USB_DRD_FS:USB_UCPD1_2_IRQn disable */
+
   /* USER CODE BEGIN USB_DRD_FS_MspDeInit 1 */
 
   /* USER CODE END USB_DRD_FS_MspDeInit 1 */
@@ -257,4 +266,3 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* hpcd)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

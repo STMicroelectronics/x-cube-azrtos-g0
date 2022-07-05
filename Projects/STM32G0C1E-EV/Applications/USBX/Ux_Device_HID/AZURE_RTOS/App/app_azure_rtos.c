@@ -4,7 +4,7 @@
   ******************************************************************************
   * @file    app_azure_rtos.c
   * @author  MCD Application Team
-  * @brief   azure_rtos application implementation file
+  * @brief   app_azure_rtos application implementation file
   ******************************************************************************
   * @attention
   *
@@ -23,7 +23,7 @@
 
 #include "app_azure_rtos.h"
 #include "stm32g0xx.h"
-
+#include "usbpd.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -61,6 +61,14 @@ static TX_BYTE_POOL tx_app_byte_pool;
 __ALIGN_BEGIN static UCHAR ux_device_byte_pool_buffer[UX_DEVICE_APP_MEM_POOL_SIZE] __ALIGN_END;
 static TX_BYTE_POOL ux_device_app_byte_pool;
 
+/* USER CODE BEGIN USBPD_Pool_Buffer */
+
+/* USER CODE END USBPD_Pool_Buffer */
+#if defined ( __ICCARM__ )
+#pragma data_alignment=4
+#endif
+static UCHAR usbpd_byte_pool_buffer[USBPD_APP_MEM_POOL_SIZE];
+static TX_BYTE_POOL usbpd_app_byte_pool;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -134,6 +142,29 @@ VOID tx_application_define(VOID *first_unused_memory)
     /* USER CODE BEGIN MX_USBX_Device_Init_Success */
 
     /* USER CODE END MX_USBX_Device_Init_Success */
+  }
+  if (tx_byte_pool_create(&usbpd_app_byte_pool, "USBPD App memory pool", usbpd_byte_pool_buffer, USBPD_APP_MEM_POOL_SIZE) != TX_SUCCESS)
+  {
+    /* USER CODE BEGIN USBPD_Byte_Pool_Error */
+      Error_Handler();
+    /* USER CODE END USBPD_Byte_Pool_Error */
+  }
+  else
+  {
+    /* USER CODE BEGIN USBPD_Byte_Pool_Success */
+
+    /* USER CODE END USBPD_Byte_Pool_Success */
+
+    memory_ptr = (VOID *)&usbpd_app_byte_pool;
+    if (MX_USBPD_Init(memory_ptr) != TX_SUCCESS)
+    {
+      /* USER CODE BEGIN  MX_USBPD_Init_Error */
+      Error_Handler();
+      /* USER CODE END  MX_USBPD_Init_Error */
+    }
+    /* USER CODE BEGIN  MX_USBPD_Init_Success */
+
+    /* USER CODE END  MX_USBPD_Init_Success */
   }
 }
 

@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stm32g0c1e_eval_pwr.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,13 +52,18 @@ extern HCD_HandleTypeDef                 hhcd_USB_DRD_FS;
 TX_THREAD                                ux_app_thread;
 TX_THREAD                                keyboard_app_thread;
 TX_THREAD                                mouse_app_thread;
+TX_THREAD                                ucpd_app_thread;
 TX_THREAD                                 safety_app_thread;
 TX_QUEUE                                 ux_app_MsgQueue;
+TX_QUEUE                                 ux_app_MsgQueue_UCPD;
 UX_HOST_CLASS_HID                        *hid;
 UX_HOST_CLASS_HID_CLIENT                 *hid_client;
 UX_HOST_CLASS_HID_MOUSE                  *mouse;
 UX_HOST_CLASS_HID_KEYBOARD               *keyboard;
-
+#if defined ( __ICCARM__ ) /* IAR Compiler */
+  #pragma data_alignment=4
+#endif /* defined ( __ICCARM__ ) */
+__ALIGN_BEGIN USB_MODE_STATE        USB_Host_State_Msg __ALIGN_END;
 #if defined ( __ICCARM__ ) /* IAR Compiler */
   #pragma data_alignment=4
 #endif /* defined ( __ICCARM__ ) */
@@ -111,7 +117,22 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
 
   /* Create the main App thread. */
   if (tx_thread_create(&ux_app_thread, "thread 0", usbx_app_thread_entry, 0,
-                       pointer, USBX_APP_STACK_SIZE, 25, 25, 1,
+                       pointer, USBX_APP_STACK_SIZE, 25, 25, 0,
+                       TX_AUTO_START) != TX_SUCCESS)
+  {
+    return TX_THREAD_ERROR;
+  }
+
+  /* Allocate the stack for the ucpd app thread. */
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                       USBX_APP_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
+  {
+    return TX_POOL_ERROR;
+  }
+
+  /* Create the ucpd app thread.  */
+  if (tx_thread_create(&ucpd_app_thread, "ucpd_app_thread", ucpd_app_thread_entry, 0,
+                       pointer, USBX_APP_STACK_SIZE, 20, 20, 0,
                        TX_AUTO_START) != TX_SUCCESS)
   {
     return TX_THREAD_ERROR;
@@ -140,8 +161,8 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
   }
 
   /* Create the HID Keyboard App thread. */
-  if (tx_thread_create(&keyboard_app_thread, "thread 1", hid_keyboard_thread_entry, 0,
-                       pointer, USBX_APP_STACK_SIZE, 30, 30, 1,
+  if (tx_thread_create(&keyboard_app_thread, "keyboard_app_thread", hid_keyboard_thread_entry, 0,
+                       pointer, USBX_APP_STACK_SIZE, 30, 30, 0,
                        TX_AUTO_START) != TX_SUCCESS)
   {
     return TX_THREAD_ERROR;
@@ -176,12 +197,67 @@ UINT MX_USBX_Host_Init(VOID *memory_ptr)
     return TX_QUEUE_ERROR;
   }
 
+/* Allocate Memory for the ux_app_Queue_UCPD  */
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                       APP_QUEUE_SIZE * sizeof(ULONG), TX_NO_WAIT) != TX_SUCCESS)
+  {
+    return TX_POOL_ERROR;
+  }
+
+  /* Create the MsgQueue for ucpd_app_thread   */
+  if (tx_queue_create(&ux_app_MsgQueue_UCPD, "Message Queue UCPD", TX_1_ULONG,
+                      pointer, APP_QUEUE_SIZE * sizeof(ULONG)) != TX_SUCCESS)
+  {
+    return TX_QUEUE_ERROR;
+  }
   /* USER CODE END MX_USBX_Host_Init */
 
   return ret;
 }
 
 /* USER CODE BEGIN 1 */
+
+/**
+  * @brief  UCPD Application_thread_entry .
+  * @param  ULONG arg
+  * @retval Void
+  */
+void  ucpd_app_thread_entry(ULONG arg)
+{
+
+  while (1)
+  {
+    /* wait for message queue from callback event */
+    if(tx_queue_receive(&ux_app_MsgQueue_UCPD, &USB_Host_State_Msg, TX_WAIT_FOREVER)!= TX_SUCCESS)
+    {
+     Error_Handler();
+    }
+    /* Check if received message equal to START_USB_HOST */
+    if (USB_Host_State_Msg == START_USB_HOST)
+    {
+    /* Enable USB Global Interrupt*/
+    HAL_HCD_Start(&hhcd_USB_DRD_FS);
+
+    tx_thread_sleep(MS_TO_TICK(10));
+
+    /* Enable power supply over VBUS */
+    BSP_PWR_VBUSOn(TYPE_C_PORT_1);
+    }
+    /* Check if received message equal to STOP_USB_HOST */
+    else if (USB_Host_State_Msg == STOP_USB_HOST)
+    {
+      /* Stop USB Host */
+      HAL_HCD_Stop(&hhcd_USB_DRD_FS);
+    }
+    /* Else Error */
+    else
+    {
+      /*Error*/
+      Error_Handler();
+    }
+   tx_thread_sleep(MS_TO_TICK(10));
+  }
+}
 /**
   * @brief  Application_thread_entry .
   * @param  ULONG arg
@@ -439,13 +515,7 @@ UINT MX_USB_Host_Init(void)
     ret = UX_ERROR;
   }
 
-  /* Enable USB Global Interrupt*/
-  HAL_HCD_Start(&hhcd_USB_DRD_FS);
 
-  tx_thread_sleep(MS_TO_TICK(10));
-
-  /* Enable power supply over VBUS */
-  ret = BSP_PWR_VBUSOn(TYPE_C_PORT_1);
 
   /* USER CODE BEGIN USB_Host_Init_PreTreatment_1 */
   /* USER CODE END USB_Host_Init_PreTreatment_1 */

@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -310,10 +309,10 @@ uint32_t                HAL_HCD_GetCurrentSpeed(HCD_HandleTypeDef *hhcd);
 /** @addtogroup PMA Allocation
   * @{
   */
-HAL_StatusTypeDef  HAL_HCD_PMAlloc(HCD_HandleTypeDef *hhcd, uint8_t  pipe,
-                                   uint16_t pipe_kind,  uint16_t mps);
+HAL_StatusTypeDef  HAL_HCD_PMAlloc(HCD_HandleTypeDef *hhcd, uint8_t ch_num,
+                                   uint16_t ch_kind, uint16_t mps);
 
-HAL_StatusTypeDef  HAL_HCD_PMADeAlloc(HCD_HandleTypeDef *hhcd, uint8_t  pipe);
+HAL_StatusTypeDef  HAL_HCD_PMADeAlloc(HCD_HandleTypeDef *hhcd, uint8_t ch_num);
 HAL_StatusTypeDef  HAL_HCD_PMAReset(HCD_HandleTypeDef *hhcd);
 
 /**
@@ -476,7 +475,7 @@ HAL_StatusTypeDef  HAL_HCD_PMAReset(HCD_HandleTypeDef *hhcd);
   * @param  bChNum channel Number.
   * @retval Counter value
   */
-__STATIC_INLINE uint16_t HCD_GET_CH_RX_CNT(HCD_TypeDef *Instance, uint16_t bChNum)
+__STATIC_INLINE uint16_t HCD_GET_CH_RX_CNT(const HCD_TypeDef *Instance, uint16_t bChNum)
 {
   UNUSED(Instance);
   __IO uint32_t count = 10U;
@@ -510,7 +509,7 @@ __STATIC_INLINE uint16_t HCD_GET_CH_RX_CNT(HCD_TypeDef *Instance, uint16_t bChNu
   * @param  bChNum channel Number.
   * @retval Counter value
   */
-__STATIC_INLINE uint16_t HCD_GET_CH_DBUF0_CNT(HCD_TypeDef *Instance, uint16_t bChNum)
+__STATIC_INLINE uint16_t HCD_GET_CH_DBUF0_CNT(const HCD_TypeDef *Instance, uint16_t bChNum)
 {
   UNUSED(Instance);
   __IO uint32_t count = 10U;
@@ -530,7 +529,7 @@ __STATIC_INLINE uint16_t HCD_GET_CH_DBUF0_CNT(HCD_TypeDef *Instance, uint16_t bC
   * @param  bChNum channel Number.
   * @retval Counter value
   */
-__STATIC_INLINE uint16_t HCD_GET_CH_DBUF1_CNT(HCD_TypeDef *Instance, uint16_t bChNum)
+__STATIC_INLINE uint16_t HCD_GET_CH_DBUF1_CNT(const HCD_TypeDef *Instance, uint16_t bChNum)
 {
   UNUSED(Instance);
   __IO uint32_t count = 10U;
@@ -562,5 +561,3 @@ __STATIC_INLINE uint16_t HCD_GET_CH_DBUF1_CNT(HCD_TypeDef *Instance, uint16_t bC
 #endif
 
 #endif /* STM32G0xx_HAL_HCD_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

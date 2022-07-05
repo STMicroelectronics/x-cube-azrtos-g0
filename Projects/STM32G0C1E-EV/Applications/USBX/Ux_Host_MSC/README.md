@@ -1,14 +1,15 @@
 
-## <b>Ux_Host_MSC application description</b>
+## <b>Ux_Host_MSC Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage. It shows how to develop USB Host Mass Storage "MSC" able to enumerate and communicates with a removable usb flash disk.
 
 The application is designed to behave as an USB MSC Host able to operate with an USB flash disk using the Bulk Only Transfer (BOT) and Small Computer System Interface (SCSI) transparent commands combined with a file system Azure RTOS FileX.
 
 The main entry function tx_application_define() is then called by ThreadX during kernel start, at this stage, all USBx resources are initialized, the MSC Class driver is registered.
-The application creates two threads :
+The application creates three threads :
 
-  - usbx_app_thread_entry    (Priority : 25; Preemption threshold : 25) used to initialize USB DRD HAL HCD driver and start the Host.
+  - ucpd_app_thread_entry    (Priority : 20; Preemption threshold : 20) used to start the Host after USB Device attachment.
+  - usbx_app_thread_entry    (Priority : 25; Preemption threshold : 25) used to initialize USB DRD HAL HCD driver.
   - msc_process_thread_entry (Priority : 30; Preemption threshold : 30) used to proceed to file operations once the device is properly enumerated.
 
 ####  <b>Expected success behavior</b>
@@ -33,6 +34,7 @@ Errors are detected such as (Unsupported device, Enumeration Fail, File operatio
 User is familiar with USB 2.0 "Universal Serial BUS" Specification and Mass storage class Specification.
 
 #### <b>Known limitations</b>
+None.
 
 ### <b>Notes</b>
  - When the power source jumper JP24 is configured to D5V position (with this configuration the mother board is powered from the daughter board),
@@ -80,9 +82,11 @@ User is familiar with USB 2.0 "Universal Serial BUS" Specification and Mass stor
 
     + The "tx_initialize_low_level.S" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
 
+#### <b>USBX usage hints</b>
+
 ### <b>Keywords</b>
 
-Connectivity, USBXHost, FILEX, ThreadX, MSC, Mass Storage, BOT, SCSI, Removable drive, UART/USART
+Connectivity, USBXHost, USBPD, FILEX, ThreadX, MSC, Mass Storage, BOT, SCSI, Removable drive, UART/USART
 
 
 ### <b>Hardware and Software environment</b>
@@ -113,3 +117,9 @@ In order to make the program work, you must do the following :
  - Rebuild all files and load your image into target memory
  - Open the configured uart HyperTerminal in order to display debug messages.
  - Run the application
+
+<b>Note</b>
+
+   The user has to check the list of the COM ports in Device Manager to find out the number of the
+   COM ports that have been assigned (by OS) to the Stlink VCP .
+   The application uses the external HSE clock as USB source clock.

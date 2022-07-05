@@ -10,8 +10,11 @@
 | BSP STM32G071B-Discovery        | BSD-3-Clause                                          | STMicroelectronics |
 | BSP STM32G0316-DISCO            | BSD-3-Clause                                          | STMicroelectronics |
 | BSP Components                  | BSD-3-Clause                                          | STMicroelectronics |
+| STM32 Utilities                 | BSD-3-Clause                                          | STMicroelectronics |
 | Application Projects            | Proprietary                                           | STMicroelectronics |
 | CMSIS RTOS Threadx wrapper      | Proprietary                                           | STMicroelectronics |
+| STM32_USBPD_Library - Core      | Proprietary                                           | STMicroelectronics |
+| STM32_USBPD_Library - Devices   | Proprietary                                           | STMicroelectronics |
 | Azure RTOS ThreadX              | Microsoft Software License for Azure RTOS             | Microsoft Corporation|
 | Azure RTOS NetXDuo              | Microsoft Software License for Azure RTOS             | Microsoft Corporation|
 | Azure RTOS FileX                | Microsoft Software License for Azure RTOS             | Microsoft Corporation|

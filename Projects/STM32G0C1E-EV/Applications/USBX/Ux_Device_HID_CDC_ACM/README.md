@@ -1,39 +1,52 @@
-## <b>Ux_Device_HID_CDC_ACM application description</b>
 
-This application provides an example of Azure RTOS USBX stack usage on STM32G0C1E-EV board, it shows how to develop a composite USB Device communication
-Class "HID" and "CDC_ACM" based application.
+## <b>Ux_Device_HID_CDC_ACM Application Description</b>
+
+This application is a USBPD type C Consumer and USB Device using Azure RTOS USBX stack on STM32G0C1E-EV board.
+It shows how to develop a USBPD type C Consumer in the case of a composite USB Device communication Class "HID" and "CDC_ACM" based application.
+
+composite USB Device :
+
 The application is designed to emulate an USB HID mouse device and USB-to-UART bridge following the Virtual COM Port (VCP) implementations,
 the code provides all required device descriptors framework and associated to both Classes descriptor report to build a composite compliant USB HID_CDC_ACM device.
 At the beginning ThreadX call the entry function tx_application_define(), at this stage, all USBx resources are initialized, the CDC_ACM and HID Class driver is
 registered and the application creates 4 threads with the same priorities :
 
-  - usbx_app_thread_entry (Prio : 20; PreemptionPrio : 20) used to initialize USB DRD HAL PCD driver and start the device.
+  - usbx_app_thread_entry (Prio : 20; PreemptionPrio : 20) used to initialize USB OTG HAL PCD driver and start the device.
   - usbx_cdc_acm_read_thread_entry (Prio : 20; PreemptionPrio : 20) used to Read the received data from Virtual COM Port.
   - usbx_cdc_acm_write_thread_entry (Prio : 20; PreemptionPrio : 20) used to send the received data over UART .
   - usbx_hid_thread_entry (Prio : 20; PreemptionPrio : 20) used to send HID reports to move automatically the PC host machine cursor.
 
+The thread usbx_app_thread_entry is responsible to start or stop the USB device.
+At Run mode the thread will be waiting on message queue form USB_PD interface, when the USB device is plugged to host PC
+a callback in USB_PD interface will send a message to usbx_app_thread_entry to start the USB device.
+By the same way when the USB device is unplugged a callback in USB_PD interface will send a message to usbx_app_thread_entry to stop the USB device.
+
 During enumeration phase, four communication pipes "endpoints" are declared in the CDC class and HID implementations :
 
- - 1 x Bulk IN endpoint for receiving data from STM32 device to PC host:
-   When data are received over UART they are saved in the buffer "UserTxBufferFS". Periodically, in a
-   usbx_cdc_acm_write_thread_entry the state of the buffer "UserTxBufferFS" is checked. If there are available data, they
-   are transmitted in response to IN token otherwise it is NAKed.
+  - 1 x Bulk IN endpoint for receiving data from STM32 device to PC host:
+    When data are received over UART they are saved in the buffer "UserTxBufferFS". Periodically, in a
+    usbx_cdc_acm_write_thread_entry the state of the buffer "UserTxBufferFS" is checked. If there are available data, they
+    are transmitted in response to IN token otherwise it is NAKed.
 
- - 1 x Bulk OUT endpoint for transmitting data from PC host to STM32 device:
-   When data are received through this endpoint they are saved in the buffer "UserRxBufferFS" then they are transmitted over UART using DMA mode and in meanwhile the OUT endpoint is NAKed.
-   Once the transmission is over, the OUT endpoint is prepared to receive next packet in HAL_UART_RxCpltCallback().
+  - 1 x Bulk OUT endpoint for transmitting data from PC host to STM32 device:
+    When data are received through this endpoint they are saved in the buffer "UserRxBufferFS" then they are transmitted over UART using DMA mode and in meanwhile the OUT endpoint is NAKed.
+    Once the transmission is over, the OUT endpoint is prepared to receive next packet in HAL_UART_RxCpltCallback().
 
- - 1 x Interrupt IN endpoint for setting and getting serial-port parameters:
-   When control setup is received, the corresponding request is executed in ux_app_parameters_change().
+  - 1 x Interrupt IN endpoint for setting and getting serial-port parameters:
+    When control setup is received, the corresponding request is executed in ux_app_parameters_change().
 
-In CDC_ACM application, two requests are implemented:
+    In CDC_ACM application, two requests are implemented:
     - Set line: Set the bit rate, number of Stop bits, parity, and number of data bits
     - Get line: Get the bit rate, number of Stop bits, parity, and number of data bits
-   The other requests (send break, control line state) are not implemented.
+    The other requests (send break, control line state) are not implemented.
 
-- 1 x Interrupt IN endpoint for setting the HID position:
-   When the User Button is pressed the application calls the GetPointerData() API to update the mouse position (x, y) and send
-the report buffer through the ux_device_class_hid_event_set() API.
+  - 1 x Interrupt IN endpoint for setting the HID position:
+    When the User Button is pressed the application calls the GetPointerData() API to update the mouse position (x, y) and send
+    the report buffer through the ux_device_class_hid_event_set() API.
+
+USBPD Consumer :
+
+This application initialize the type C port 1 in sink mode with only one PDO at 5V.
 
 <b>Note</b>
 
@@ -42,14 +55,12 @@ The support of the VCP interface is managed through the ST Virtual COM Port driv
 
 - The user has to check the list of HID and the COM ports in Device Manager to find out the HID device and the COM port number that have been assigned (by OS) to the VCP interface.
 
-- CDC ACM non-blocking transmission by default disabled, to enable non-blocking transmission UX_DEVICE_CLASS_CDC_ACM_TRANSMISSION_DISABLE must be disabled
-  and 2048 additional in USBX byte pool and USBX_MEMORY_SIZE.
-
 #### <b>Expected success behavior</b>
 
 When plugged to PC host, the STM32G0C1E-EV must be properly enumerated a composite device as an HID ,USB Serial device and an STlink Com port.
-During the enumeration phase, the device must provide host with the requested descriptors (Device descriptor, configuration descriptor, string descriptors).
-Those descriptors are used by host driver to identify the device capabilities. Once STM32G0C1E-EV USB device successfully completed the enumeration phase.
+During the enumeration phase, device provides host with the requested descriptors (Device, configuration, string).
+Those descriptors are used by host driver to identify the device capabilities. 
+Once STM32G0C1E-EV USB device successfully completed the enumeration phase.
 Connect USB cable to Host , Open two hyperterminals (USB com port and UART com port) to send/receive data to/from host to/from device.
 When USER_Button is pressed, the device sneds a HID report. Each report sent should move the PC host machine mouse cursor by one step.
 
@@ -64,7 +75,10 @@ The Red LED is toggling to indicate any error that has occurred.
 User is familiar with USB 2.0 "Universal Serial BUS" Specification and CDC_ACM class Specification.
 
 #### <b>Known limitations</b>
-None.
+
+The remote wakeup feature is not yet implemented (used to bring the USB suspended bus back to the active condition).
+
+### <b>Notes</b>
 
 #### <b>ThreadX usage hints</b>
 
@@ -105,10 +119,12 @@ None.
        Read more in STM32CubeIDE User Guide, chapter: "Linker script".
 
     + The "tx_initialize_low_level.S" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
+#### <b>USBX usage hints</b>
 
 ### <b>Keywords</b>
 
 RTOS, ThreadX, USBX, USBXDevice, USB_DRD, Full Speed, CDC, HID, VCP, USART, DMA, Mouse.
+USB_PD_Lib, UCPD, Type C, USBPD.
 
 ### <b>Hardware and Software environment</b>
 
@@ -136,6 +152,7 @@ RTOS, ThreadX, USBX, USBXDevice, USB_DRD, Full Speed, CDC, HID, VCP, USART, DMA,
 <b>Note</b>
 
   - When we configure the VCP baudrate under 9600 the USART3 baudrate shall be set to 9600.
+ - _TRACE and _GUI_INTERFACE compilation switches are now disabled to allow proper execution of CDC_ACM application over VCP. If user wants to use STM32CUbeMonitorUCPD, those 2 flags need to be enabled in project compilation options.
 
 ### <b>How to use it ?</b>
 

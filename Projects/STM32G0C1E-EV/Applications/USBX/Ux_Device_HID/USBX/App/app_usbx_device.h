@@ -30,14 +30,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "main.h"
-#include "ux_api.h"
-#include "ux_system.h"
-#include "ux_utility.h"
-#include "ux_device_stack.h"
-#include "ux_dcd_stm32.h"
-#include "ux_device_descriptors.h"
-#include "ux_device_mouse.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -64,11 +57,15 @@ void MX_USB_Device_Init(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define APP_QUEUE_SIZE                               5
 /* USER CODE END PD */
 
 /* USER CODE BEGIN 1 */
-
+typedef enum
+{
+  STOP_USB_DEVICE = 1,
+  START_USB_DEVICE,
+} USB_MODE_STATE;
 /* USER CODE END 1 */
 
 #ifdef __cplusplus

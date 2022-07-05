@@ -263,7 +263,8 @@ void App_ThreadX_LowPower_Exit(void);
 #define TX_LOW_POWER_USER_EXIT App_ThreadX_LowPower_Exit()
 
 /* User's low-power macro to obtain the amount of time (in ticks) the system has been in low power mode */
-/*#define TX_LOW_POWER_USER_TIMER_ADJUST */
+unsigned long App_ThreadX_LowPower_Timer_Adjust(void);
+#define TX_LOW_POWER_USER_TIMER_ADJUST App_ThreadX_LowPower_Timer_Adjust()
 
 #endif
 

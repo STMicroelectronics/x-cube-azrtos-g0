@@ -10,6 +10,17 @@
   *           + Peripheral Control functions
   *           + Peripheral State functions
   *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
   ==============================================================================
                     ##### How to use this driver #####
@@ -36,17 +47,6 @@
         (##) HAL_HCD_Start();
 
   @endverbatim
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
   ******************************************************************************
   */
 
@@ -473,6 +473,12 @@ HAL_StatusTypeDef HAL_HCD_DeInit(HCD_HandleTypeDef *hhcd)
 {
   uint8_t idx;
 
+  /* Check the HCD handle allocation */
+  if (hhcd == NULL)
+  {
+    return HAL_ERROR;
+  }
+
   /* Host Port State */
   hhcd->HostState = HCD_HCD_STATE_DISCONNECTED;
 
@@ -487,6 +493,23 @@ HAL_StatusTypeDef HAL_HCD_DeInit(HCD_HandleTypeDef *hhcd)
 
   /* reset Ep0 Pma allocation state */
   hhcd->ep0_PmaAllocState = 0U;
+
+  hhcd->State = HAL_HCD_STATE_BUSY;
+
+#if (USE_HAL_HCD_REGISTER_CALLBACKS == 1U)
+  if (hhcd->MspDeInitCallback == NULL)
+  {
+    hhcd->MspDeInitCallback = HAL_HCD_MspDeInit; /* Legacy weak MspDeInit */
+  }
+
+  /* DeInit the low level hardware */
+  hhcd->MspDeInitCallback(hhcd);
+#else
+  /* DeInit the low level hardware: CLOCK, NVIC. */
+  HAL_HCD_MspDeInit(hhcd);
+#endif /* USE_HAL_HCD_REGISTER_CALLBACKS */
+
+  hhcd->State = HAL_HCD_STATE_RESET;
 
   return HAL_OK;
 }
@@ -2318,17 +2341,19 @@ static uint8_t HAL_HCD_Get_FreePhyChannel(HCD_HandleTypeDef *hhcd, uint8_t ch_nu
     {
       if (hhcd->phy_chin_state[idx] == 0U)
       {
-        /* chin_state will store the ep_type to be used for the same channel in OUT direction */
+        /* chin_state to store the ep_type to be used for the same channel in OUT direction
+         * adding + 1 to ep_type avoid starting with a 0 value. ep_type take by default (0/1/2/3) */
         hhcd->phy_chin_state[idx] = (((uint16_t)ch_num + 1U) << 4U) |
-                                    ((uint16_t)ep_type + 1U) | /* ep_type(0/1/2/3) so adding + 1 to avoid having a 0 value */
+                                    ((uint16_t)ep_type + 1U) |
                                     (((uint16_t)epnum & 0x0FU) << 8U);
       }
 
       if (hhcd->phy_chout_state[idx] == 0U)
       {
-        /* chout_state will store the ep_type to be used for the same channel in IN direction */
+        /* chout_state will store the ep_type to be used for the same channel in IN direction
+         * adding + 1 to ep_type avoid starting with a 0 value. ep_type take by default (0/1/2/3) */
         hhcd->phy_chout_state[idx] = (((uint16_t)ch_num + 1U) << 4U) |
-                                     ((uint16_t)ep_type + 1U) | /* ep_type(0/1/2/3) so adding + 1 to avoid having a 0 value */
+                                     ((uint16_t)ep_type + 1U) |
                                      (((uint16_t)epnum & 0x0FU) << 8U);
       }
     }
@@ -2338,9 +2363,10 @@ static uint8_t HAL_HCD_Get_FreePhyChannel(HCD_HandleTypeDef *hhcd, uint8_t ch_nu
       {
         if (((hhcd->phy_chin_state[idx] & 0xF0U) >> 4U) != ((uint16_t)ch_num + 1U))
         {
-          /* chin_state will store the ep_type to be used for the same channel in OUT direction */
+          /* chin_state to store the ep_type to be used for the same channel in OUT direction
+           * adding + 1 to ep_type avoid starting with a 0 value. ep_type take by default (0/1/2/3) */
           hhcd->phy_chin_state[idx] = (((uint16_t)ch_num + 1U) << 4U) |
-                                      ((uint16_t)ep_type + 1U) | /* ep_type(0/1/2/3) so adding + 1 to avoid having a 0 value */
+                                      ((uint16_t)ep_type + 1U) |
                                       (((uint16_t)epnum & 0x0FU) << 8U);
         }
       }
@@ -2348,9 +2374,10 @@ static uint8_t HAL_HCD_Get_FreePhyChannel(HCD_HandleTypeDef *hhcd, uint8_t ch_nu
       {
         if (((hhcd->phy_chout_state[idx] & 0xF0U) >> 4U) != ((uint16_t)ch_num + 1U))
         {
-          /* chout_state will store the ep_type to be used for the same channel in IN direction */
+          /* chout_state will store the ep_type to be used for the same channel in IN direction
+           * adding + 1 to ep_type avoid starting with a 0 value. ep_type take by default (0/1/2/3) */
           hhcd->phy_chout_state[idx] = (((uint16_t)ch_num + 1U) << 4U) |
-                                       ((uint16_t)ep_type + 1U) | /* ep_type(0/1/2/3) so adding + 1 to avoid having a 0 value */
+                                       ((uint16_t)ep_type + 1U) |
                                        (((uint16_t)epnum & 0x0FU) << 8U);
         }
       }
@@ -2364,14 +2391,16 @@ static uint8_t HAL_HCD_Get_FreePhyChannel(HCD_HandleTypeDef *hhcd, uint8_t ch_nu
     /* Find a new available physical in channel */
     for (idx = 1U; idx < hhcd->Init.Host_channels; idx++)
     {
-      if ((hhcd->phy_chin_state[idx] == 0U) &&   /* if PhysicalChannelx(EPCHidx) IN is Free */
-          ((((hhcd->phy_chout_state[idx] & 0x000FU) == ((uint16_t)ep_type + 1U)) && /* if  the same (EPCHidx) Channelx OUT is already opened check if the same type is allocated */
-            (((hhcd->phy_chout_state[idx] & 0x0F00U) == ((uint16_t)epnum & 0x0FU)))) || /* Check if the same Epnum is allocated then allocate the same physical channelOUT for IN Logical Channel */
-           (hhcd->phy_chout_state[idx] == 0U))) /* OR if  physical Channel OUT (EPCHidx)is free */
+      /* Check if the same epnum is allocated then allocate the same physical channel OUT for IN Logical Channel */
+      if ((hhcd->phy_chin_state[idx] == 0U) &&
+          ((((hhcd->phy_chout_state[idx] & 0x000FU) == ((uint16_t)ep_type + 1U)) &&
+            (((hhcd->phy_chout_state[idx] & 0x0F00U) == ((uint16_t)epnum & 0x0FU)))) ||
+           (hhcd->phy_chout_state[idx] == 0U)))
       {
-        /* chin_state will store the ep_type to be used for the same channel in OUT direction */
+        /* chin_state to store the ep_type to be used for the same channel in OUT direction
+         * adding + 1 to ep_type avoid starting with a 0 value. ep_type take by default (0/1/2/3) */
         hhcd->phy_chin_state[idx] = (((uint16_t)ch_num + 1U) << 4U) |
-                                    ((uint16_t)ep_type + 1U) | /* ep_type(0/1/2/3) so adding + 1 to avoid having a 0 value */
+                                    ((uint16_t)ep_type + 1U) |
                                     (((uint16_t)epnum & 0x0FU) << 8U);
 
         return idx;
@@ -2383,15 +2412,16 @@ static uint8_t HAL_HCD_Get_FreePhyChannel(HCD_HandleTypeDef *hhcd, uint8_t ch_nu
     /* Find a new available physical out channel */
     for (idx = 1U; idx < hhcd->Init.Host_channels; idx++)
     {
-      /* if there is a free out channel and the same channel is used for the in direction then check if same ep_type used */
+      /* Check if the same epnum is allocated then allocate the same physical channel IN for OUT Logical Channel */
       if ((hhcd->phy_chout_state[idx] == 0U) &&
           ((((hhcd->phy_chin_state[idx] & 0x0FU) == ((uint16_t)ep_type + 1U)) &&
             ((hhcd->phy_chin_state[idx] & 0x0F00U) == ((uint16_t)epnum & 0x0FU))) ||
            (hhcd->phy_chin_state[idx] == 0U)))
       {
-        /* chout_state will store the ep_type to be used for the same channel in IN direction */
+        /* chout_state will store the ep_type to be used for the same channel in IN direction
+         * adding + 1 to ep_type avoid starting with a 0 value. ep_type take by default (0/1/2/3) */
         hhcd->phy_chout_state[idx] = (((uint16_t)ch_num + 1U) << 4U) |
-                                     ((uint16_t)ep_type + 1U) |  /* ep_type(0/1/2/3) so adding +1 to avoid having a 0 value */
+                                     ((uint16_t)ep_type + 1U) |
                                      (((uint16_t)epnum & 0x0FU) << 8U);
 
         return idx;
@@ -2548,7 +2578,7 @@ static uint16_t HAL_HCD_GetFreePMA(HCD_HandleTypeDef *hhcd, uint16_t mps)
   * @param  mps Channel Max Packet Size
   * @retval HAL status
   */
-HAL_StatusTypeDef  HAL_HCD_PMAlloc(HCD_HandleTypeDef *hhcd, uint8_t  ch_num,
+HAL_StatusTypeDef  HAL_HCD_PMAlloc(HCD_HandleTypeDef *hhcd, uint8_t ch_num,
                                    uint16_t ch_kind, uint16_t mps)
 {
   uint16_t pma_addr0;
@@ -2651,9 +2681,10 @@ HAL_StatusTypeDef  HAL_HCD_PMAlloc(HCD_HandleTypeDef *hhcd, uint8_t  ch_num,
   * @param  ch_num Channel number
   * @retval HAL status
   */
-HAL_StatusTypeDef  HAL_HCD_PMADeAlloc(HCD_HandleTypeDef *hhcd, uint8_t  ch_num)
+HAL_StatusTypeDef  HAL_HCD_PMADeAlloc(HCD_HandleTypeDef *hhcd, uint8_t ch_num)
 {
-  HAL_StatusTypeDef status = HAL_OK;
+  HAL_StatusTypeDef status;
+
 #if (USE_USB_DOUBLE_BUFFER == 1U)
   uint8_t Err = 0U;
 #endif /* (USE_USB_DOUBLE_BUFFER == 1U) */
@@ -2666,9 +2697,9 @@ HAL_StatusTypeDef  HAL_HCD_PMADeAlloc(HCD_HandleTypeDef *hhcd, uint8_t  ch_num)
   {
     status = HAL_HCD_PMAFree(hhcd, hc->pmaadress, hc->max_packet);
   }
-#if (USE_USB_DOUBLE_BUFFER == 1U)
   else   /* Double buffer */
   {
+#if (USE_USB_DOUBLE_BUFFER == 1U)
     status = HAL_HCD_PMAFree(hhcd, hc->pmaaddr0, hc->max_packet);
     if (status != HAL_OK)
     {
@@ -2685,8 +2716,10 @@ HAL_StatusTypeDef  HAL_HCD_PMADeAlloc(HCD_HandleTypeDef *hhcd, uint8_t  ch_num)
     {
       return HAL_ERROR;
     }
-  }
+#else
+    status = HAL_ERROR;
 #endif /* (USE_USB_DOUBLE_BUFFER == 1U) */
+  }
 
   return status;
 }
@@ -2805,5 +2838,3 @@ static HAL_StatusTypeDef  HAL_HCD_PMAFree(HCD_HandleTypeDef *hhcd, uint32_t pma_
 /**
   * @}
   */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

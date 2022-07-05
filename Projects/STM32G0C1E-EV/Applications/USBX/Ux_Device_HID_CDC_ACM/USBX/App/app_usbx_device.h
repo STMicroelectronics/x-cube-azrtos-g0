@@ -64,11 +64,15 @@ void MX_USB_Device_Init(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define APP_QUEUE_SIZE                               5
 /* USER CODE END PD */
 
 /* USER CODE BEGIN 1 */
-
+typedef enum
+{
+  STOP_USB_DEVICE = 1,
+  START_USB_DEVICE,
+} USB_MODE_STATE;
 /* USER CODE END 1 */
 
 #ifdef __cplusplus

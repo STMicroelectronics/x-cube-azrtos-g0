@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -71,13 +70,13 @@ typedef enum
   HC_IDLE = 0,
   HC_XFRC,
   HC_HALTED,
+  HC_ACK,
   HC_NAK,
   HC_NYET,
   HC_STALL,
   HC_XACTERR,
   HC_BBLERR,
-  HC_DATATGLERR,
-  HC_ACK
+  HC_DATATGLERR
 } USB_DRD_HCStateTypeDef;
 
 
@@ -461,11 +460,11 @@ typedef struct
   * @param  bEpChNum Endpoint Number.
   * @retval status
   */
-#define USB_DRD_GET_CHEP_TX_STATUS(USBx, bEpChNum)     ((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum))\
-                                                        & USB_DRD_CHEP_TX_STTX)
+#define USB_DRD_GET_CHEP_TX_STATUS(USBx, bEpChNum) \
+  ((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_DRD_CHEP_TX_STTX)
 
-#define USB_DRD_GET_CHEP_RX_STATUS(USBx, bEpChNum)     ((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum))\
-                                                        & USB_DRD_CHEP_RX_STRX)
+#define USB_DRD_GET_CHEP_RX_STATUS(USBx, bEpChNum) \
+  ((uint16_t)USB_DRD_GET_CHEP((USBx), (bEpChNum)) & USB_DRD_CHEP_RX_STRX)
 
 
 /**
@@ -725,8 +724,11 @@ typedef struct
   * @param  wBuf0Addr buffer 0 address.
   * @retval Counter value
   */
-#define USB_DRD_SET_CHEP_DBUF0_ADDR(USBx, bEpChNum, wBuf0Addr)    USB_DRD_SET_CHEP_TX_ADDRESS((USBx), (bEpChNum), (wBuf0Addr))
-#define USB_DRD_SET_CHEP_DBUF1_ADDR(USBx, bEpChNum, wBuf1Addr)    USB_DRD_SET_CHEP_RX_ADDRESS((USBx), (bEpChNum), (wBuf1Addr))
+#define USB_DRD_SET_CHEP_DBUF0_ADDR(USBx, bEpChNum, wBuf0Addr) \
+  USB_DRD_SET_CHEP_TX_ADDRESS((USBx), (bEpChNum), (wBuf0Addr))
+
+#define USB_DRD_SET_CHEP_DBUF1_ADDR(USBx, bEpChNum, wBuf1Addr) \
+  USB_DRD_SET_CHEP_RX_ADDRESS((USBx), (bEpChNum), (wBuf1Addr))
 
 
 /**
@@ -883,5 +885,3 @@ void              USB_ReadPMA(USB_DRD_TypeDef *USBx, uint8_t *pbUsrBuf,
 
 
 #endif /* STM32G0xx_LL_USB_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

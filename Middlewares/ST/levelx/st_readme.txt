@@ -6,6 +6,13 @@
   *          Azure RTOS LeveLX for STM32 devices.
   ******************************************************************************
   */
+### 01-April-2022 ###
+========================
+- Upgrade to Azure RTOS LeveLX 6.1.10
+
+### 28-January-2022 ###
+========================
+- Add STM32C0 series to Azure RTOS licensed hardware list
 
 ### 13-December-2021 ###
 ========================

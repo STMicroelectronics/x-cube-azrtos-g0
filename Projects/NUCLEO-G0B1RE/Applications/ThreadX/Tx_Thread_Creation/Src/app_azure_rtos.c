@@ -23,7 +23,6 @@
 
 #include "app_azure_rtos.h"
 #include "stm32g0xx.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -101,6 +100,7 @@ VOID tx_application_define(VOID *first_unused_memory)
     /* USER CODE END  App_ThreadX_Init_Success */
 
   }
+
 }
 
 /* USER CODE BEGIN  0 */

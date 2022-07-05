@@ -224,6 +224,10 @@
         </option>
         <option>
           <name>CCDefines</name>
+          <state>USE_FULL_LL_DRIVER</state>
+          <state>USBPD_PORT_COUNT=1</state>
+          <state>_SNK</state>
+          <state>USBPDCORE_LIB_NO_PD</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
           <state>USE_HAL_DRIVER</state>
@@ -357,8 +361,12 @@
           <state>$PROJ_DIR$/../AZURE_RTOS/App</state>
           <state>$PROJ_DIR$/../USBX/App</state>
           <state>$PROJ_DIR$/../USBX/Target</state>
+          <state>$PROJ_DIR$/../USBPD/App</state>
+          <state>$PROJ_DIR$/../USBPD/Target</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Inc</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Inc/Legacy</state>
+          <state>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/inc</state>
+          <state>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/inc</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Device/ST/STM32G0xx/Include</state>
           <state>$PROJ_DIR$/../../../../../../Drivers/CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/inc/</state>
@@ -367,6 +375,7 @@
           <state>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/</state>
           <state>$PROJ_DIR$/../../../../../../Middlewares/ST/threadx/common/inc/</state>
           <state>$PROJ_DIR$/../../../../../../Middlewares/ST/threadx/ports/cortex_m0/iar/inc/</state>
+          <state>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G0C1E-EV</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1090,6 +1099,33 @@
         </file>
       </group>
       <group>
+        <name>USBPD</name>
+        <group>
+          <name>Target</name>
+          <file>
+            <name>$PROJ_DIR$/../USBPD/Target/usbpd_dpm_user.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../USBPD/Target/usbpd_pwr_user.c</name>
+          </file>
+        </group>
+        <group>
+          <name>App</name>
+          <file>
+            <name>$PROJ_DIR$/../USBPD/App/usbpd.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../USBPD/App/usbpd_pwr_if.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../USBPD/App/usbpd_dpm_core.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../USBPD/App/usbpd_usb_if.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
         <name>USBX</name>
         <group>
           <name>App</name>
@@ -1127,7 +1163,31 @@
   <group>
     <name>Drivers</name>
     <group>
+      <name>BSP</name>
+      <group>
+        <name>STM32G0C1E-EV</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Drivers/BSP/STM32G0C1E-EV/stm32g0c1e_eval_pwr.c</name>
+        </file>
+      </group>
+    </group>
+    <group>
       <name>STM32G0xx_HAL_Driver</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_adc_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_adc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_lptim.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_rcc.c</name>
       </file>
@@ -1171,10 +1231,25 @@
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_exti.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_utils.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_exti.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_crs.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_tim_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_ucpd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_gpio.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_uart.c</name>
@@ -1191,6 +1266,9 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_usb.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_ll_tim.c</name>
+      </file>
     </group>
     <group>
       <name>CMSIS</name>
@@ -1202,9 +1280,39 @@
   <group>
     <name>Middlewares</name>
     <group>
+      <name>USBPD</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/lib/USBPDCORE_NOPD_CM0PLUS_wc32.a</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Core/src/usbpd_trace.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_cad_hw_if.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_hw.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_hw_if_it.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_phy_hw_if.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../Middlewares/ST/STM32_USBPD_Library/Devices/STM32G0XX/src/usbpd_pwr_hw_if.c</name>
+      </file>
+    </group>
+    <group>
       <name>USBX</name>
       <group>
         <name>USB/USBX/UX Device CoreStack</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_tasks_run.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_transfer_run.c</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_device_stack_alternate_setting_get.c</name>
         </file>
@@ -1281,6 +1389,27 @@
       <group>
         <name>USB/USBX/UX Device Class HID</name>
         <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_read.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_event_free.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_event_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_initialize.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_thread.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_receiver_uninitialize.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_tasks_run.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_hid_activate.c</name>
         </file>
         <file>
@@ -1319,6 +1448,9 @@
       </group>
       <group>
         <name>USB/USBX/CoreSystem</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_system_tasks_run.c</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/core/src/ux_utility_debug_callback_register.c</name>
         </file>
@@ -1494,6 +1626,9 @@
       <group>
         <name>USB/USBX/UX Device Controllers</name>
         <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_run.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_callback.c</name>
         </file>
         <file>
@@ -1527,6 +1662,9 @@
           <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_interrupt_handler.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_abort.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_stm32_device_controllers/ux_dcd_stm32_transfer_request.c</name>
         </file>
         <file>
@@ -1535,6 +1673,15 @@
       </group>
       <group>
         <name>USB/USBX/UX Device Class CDC ACM</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_read_run.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_tasks_run.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_write_run.c</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../Middlewares/ST/usbx/common/usbx_device_classes/src/ux_device_class_cdc_acm_activate.c</name>
         </file>

@@ -96,6 +96,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   /* USER CODE BEGIN USART3_MspInit 0 */
 
   /* USER CODE END USART3_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART3;
@@ -196,6 +197,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* hpcd)
   /* USER CODE BEGIN USB_DRD_FS_MspInit 0 */
 
   /* USER CODE END USB_DRD_FS_MspInit 0 */
+
   /** Initializes the peripherals clocks
   */
     PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB;
@@ -246,7 +248,14 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* hpcd)
     __HAL_RCC_USB_CLK_DISABLE();
 
     /* USB_DRD_FS interrupt DeInit */
-    HAL_NVIC_DisableIRQ(USB_UCPD1_2_IRQn);
+  /* USER CODE BEGIN USB_DRD_FS:USB_UCPD1_2_IRQn disable */
+    /**
+    * Uncomment the line below to disable the "USB_UCPD1_2_IRQn" interrupt
+    * Be aware, disabling shared interrupt may affect other IPs
+    */
+    /* HAL_NVIC_DisableIRQ(USB_UCPD1_2_IRQn); */
+  /* USER CODE END USB_DRD_FS:USB_UCPD1_2_IRQn disable */
+
   /* USER CODE BEGIN USB_DRD_FS_MspDeInit 1 */
 
   /* USER CODE END USB_DRD_FS_MspDeInit 1 */
@@ -257,4 +266,3 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* hpcd)
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
-

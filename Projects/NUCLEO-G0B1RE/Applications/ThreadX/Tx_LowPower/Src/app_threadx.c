@@ -121,6 +121,18 @@ void App_ThreadX_LowPower_Exit(void)
 }
 
 /**
+  * @brief  App_ThreadX_LowPower_Timer_Adjust
+  * @param  None
+  * @retval Amount of time (in ticks)
+  */
+ULONG App_ThreadX_LowPower_Timer_Adjust(void)
+{
+  /* USER CODE BEGIN  App_ThreadX_LowPower_Timer_Adjust */
+  return 0;
+  /* USER CODE END  App_ThreadX_LowPower_Timer_Adjust */
+}
+
+/**
   * @brief  MX_ThreadX_Init
   * @param  None
   * @retval None

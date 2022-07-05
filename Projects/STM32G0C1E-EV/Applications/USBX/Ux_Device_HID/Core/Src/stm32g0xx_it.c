@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32g0xx_it.h"
+#include "usbpd.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 /* USER CODE END Includes */
@@ -56,10 +57,11 @@
 
 /* External variables --------------------------------------------------------*/
 extern PCD_HandleTypeDef hpcd_USB_DRD_FS;
-extern TIM_HandleTypeDef htim6;
+extern TIM_HandleTypeDef htim7;
 
 /* USER CODE BEGIN EV */
-
+extern ADC_HandleTypeDef hadc1;
+extern DMA_HandleTypeDef hdma_adc1;
 /* USER CODE END EV */
 
 /******************************************************************************/
@@ -125,26 +127,81 @@ void USB_UCPD1_2_IRQHandler(void)
 
   /* USER CODE END USB_UCPD1_2_IRQn 0 */
   HAL_PCD_IRQHandler(&hpcd_USB_DRD_FS);
+  USBPD_PORT0_IRQHandler();
+
   /* USER CODE BEGIN USB_UCPD1_2_IRQn 1 */
 
   /* USER CODE END USB_UCPD1_2_IRQn 1 */
 }
 
 /**
-  * @brief This function handles TIM6, DAC and LPTIM1 global Interrupts.
+  * @brief This function handles DMA1 channel 2 and channel 3 interrupts.
   */
-void TIM6_DAC_LPTIM1_IRQHandler(void)
+void DMA1_Channel2_3_IRQHandler(void)
 {
-  /* USER CODE BEGIN TIM6_DAC_LPTIM1_IRQn 0 */
+  /* USER CODE BEGIN DMA1_Channel2_3_IRQn 0 */
 
-  /* USER CODE END TIM6_DAC_LPTIM1_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim6);
-  /* USER CODE BEGIN TIM6_DAC_LPTIM1_IRQn 1 */
+  /* USER CODE END DMA1_Channel2_3_IRQn 0 */
 
-  /* USER CODE END TIM6_DAC_LPTIM1_IRQn 1 */
+  /* USER CODE BEGIN DMA1_Channel2_3_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel2_3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 Ch4 to Ch7, DMA2 Ch1 to Ch5 and DMAMUX1 Overrun Interrupts.
+  */
+void DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 0 */
+//
+  /* USER CODE END DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 0 */
+
+  /* USER CODE BEGIN DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 1 */
+//
+  /* USER CODE END DMA1_Ch4_7_DMA2_Ch1_5_DMAMUX1_OVR_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM7 and LPTIM2 global Interrupt.
+  */
+void TIM7_LPTIM2_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM7_LPTIM2_IRQn 0 */
+
+  /* USER CODE END TIM7_LPTIM2_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim7);
+  /* USER CODE BEGIN TIM7_LPTIM2_IRQn 1 */
+
+  /* USER CODE END TIM7_LPTIM2_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
+/**
+  * @brief This function handles DMA1 channel 1 interrupt.
+  */
+void DMA1_Channel1_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 0 */
 
+  /* USER CODE END DMA1_Channel1_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_adc1);
+  /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
+
+  /* USER CODE END DMA1_Channel1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles ADC1, COMP1,COMP2, COMP3 Interrupts (combined with EXTI 17 & 18).
+  */
+void ADC1_COMP_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC1_COMP_IRQn 0 */
+
+  /* USER CODE END ADC1_COMP_IRQn 0 */
+  HAL_ADC_IRQHandler(&hadc1);
+  /* USER CODE BEGIN ADC1_COMP_IRQn 1 */
+
+  /* USER CODE END ADC1_COMP_IRQn 1 */
+}
 /* USER CODE END 1 */
-

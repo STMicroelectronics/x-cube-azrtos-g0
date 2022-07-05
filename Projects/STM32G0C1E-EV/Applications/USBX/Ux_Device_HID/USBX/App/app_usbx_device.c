@@ -23,7 +23,15 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "main.h"
+#include "ux_api.h"
+#include "ux_system.h"
+#include "ux_utility.h"
+#include "ux_device_stack.h"
+#include "ux_dcd_stm32.h"
+#include "ux_device_descriptors.h"
+#include "ux_device_mouse.h"
+#include "app_azure_rtos_config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,7 +56,13 @@ TX_THREAD                       ux_app_thread;
 TX_THREAD                       ux_hid_thread;
 UX_SLAVE_CLASS_HID_EVENT        mouse_hid_event;
 UX_SLAVE_CLASS_HID_PARAMETER    hid_parameter;
+/* ux app msg queue */
+TX_QUEUE     ux_app_MsgQueue;
 extern PCD_HandleTypeDef        hpcd_USB_DRD_FS;
+#if defined ( __ICCARM__ ) /* IAR Compiler */
+  #pragma data_alignment=4
+#endif /* defined ( __ICCARM__ ) */
+__ALIGN_BEGIN USB_MODE_STATE                            Event_Msg;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -70,11 +84,17 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
 
   /* USER CODE BEGIN MX_USBX_Device_Init */
   UCHAR *pointer;
+  /* Device framework FS length*/
   ULONG device_framework_fs_length;
+  /* Device String framework length*/
   ULONG string_framework_length;
+  /* Device language id framework length*/
   ULONG languge_id_framework_length;
+  /* Device Framework Full Speed */
   UCHAR *device_framework_full_speed;
+  /* String Framework*/
   UCHAR *string_framework;
+  /* Language_Id_Framework*/
   UCHAR *language_id_framework;
 
   /* Allocate the stack for thread 0.  */
@@ -132,7 +152,7 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
     return UX_ERROR;
   }
 
-  /* Allocate the stack for main_usbx_app_thread_entry.  */
+  /* Allocate the stack for main_usbx_app_thread_entry. */
   if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
                        USBX_APP_STACK_SIZE, TX_NO_WAIT) != TX_SUCCESS)
   {
@@ -156,12 +176,28 @@ UINT MX_USBX_Device_Init(VOID *memory_ptr)
 
   /* Create the usbx_hid_thread_entry thread. */
   if (tx_thread_create(&ux_hid_thread, "hid_usbx_app_thread_entry",
-                       usbx_hid_thread_entry, 1, pointer, USBX_APP_STACK_SIZE,
-                       25, 25, 1, TX_AUTO_START) != TX_SUCCESS)
+                       usbx_hid_thread_entry, 0,
+                       pointer, USBX_APP_STACK_SIZE, 20, 20,
+                       1, TX_AUTO_START) != TX_SUCCESS)
   {
     return TX_THREAD_ERROR;
   }
 
+  /* Allocate Memory for the Queue */
+  if (tx_byte_allocate(byte_pool, (VOID **) &pointer,
+                       sizeof(APP_QUEUE_SIZE*sizeof(ULONG)),
+                       TX_NO_WAIT) != TX_SUCCESS)
+  {
+    return TX_POOL_ERROR;
+  }
+
+  /* Create the MsgQueue */
+  if (tx_queue_create(&ux_app_MsgQueue, "Message Queue app",
+                      TX_1_ULONG, pointer,
+                      APP_QUEUE_SIZE*sizeof(ULONG)) != TX_SUCCESS)
+  {
+    return TX_QUEUE_ERROR;
+  }
   /* USER CODE END MX_USBX_Device_Init */
 
   return ret;
@@ -177,6 +213,36 @@ void usbx_app_thread_entry(ULONG arg)
 {
   /* Initialization of USB device */
   MX_USB_Device_Init();
+
+  /* Wait for message queue to start/stop the device */
+  while(1)
+  {
+    /* Wait for a device to be connected */
+    if (tx_queue_receive(&ux_app_MsgQueue, &Event_Msg,
+                         TX_WAIT_FOREVER)!= TX_SUCCESS)
+    {
+     /*Error*/
+     Error_Handler();
+    }
+    /* Check if received message equal to USB_PCD_START */
+    if (Event_Msg == START_USB_DEVICE)
+    {
+      /* Start device USB */
+      HAL_PCD_Start(&hpcd_USB_DRD_FS);
+    }
+    /* Check if received message equal to USB_PCD_STOP */
+    else if (Event_Msg == STOP_USB_DEVICE)
+    {
+      /* Stop device USB */
+      HAL_PCD_Stop(&hpcd_USB_DRD_FS);
+    }
+    /* Else Error */
+    else
+    {
+      /*Error*/
+      Error_Handler();
+    }
+  }
 }
 
 /**
@@ -200,8 +266,6 @@ void MX_USB_Device_Init(void)
 
   /* initialize the device controller driver*/
   _ux_dcd_stm32_initialize((ULONG)USB_DRD_FS, (ULONG)&hpcd_USB_DRD_FS);
-
-  HAL_PCD_Start(&hpcd_USB_DRD_FS);
 
   /* USER CODE BEGIN USB_Device_Init_PostTreatment */
   /* USER CODE END USB_Device_Init_PostTreatment */

@@ -1,5 +1,5 @@
 
-## <b>Ux_Host_HID application description</b>
+## <b>Ux_Host_HID Application Description</b>
 
 This application provides an example of Azure RTOS USBX stack usage .
 It shows how to develop USB Host Human Interface "HID" able to enumerate and communicates with a mouse or a keyboard.
@@ -9,9 +9,10 @@ HID devices , HID Class APIs to decode HID reports received from a mouse or a ke
 
 The main entry function tx_application_define() is then called by ThreadX during kernel start, at this stage, all USBx resources
 are initialized, the HID Class driver and HID clients are registered.
-The application creates 3 threads with different priorities :
+The application creates 4 threads with different priorities :
 
-  - usbx_app_thread_entry     (Priority : 25; Preemption threshold : 25) used to initialize USB DRD HAL HCD driver and start the Host.
+  - ucpd_app_thread_entry     (Priority : 20; Preemption threshold : 20) used to start the Host after USB Device attachment.
+  - usbx_app_thread_entry     (Priority : 25; Preemption threshold : 25) used to initialize USB OTG HAL HCD driver.
   - hid_mouse_thread_entry    (Priority : 30; Preemption threshold : 30) used to decode HID reports received  from a mouse.
   - hid_keyboard_thread_entry (Priority : 30; Preemption threshold : 30) used to decode HID reports received  from a keyboard.
 
@@ -40,6 +41,7 @@ Errors are detected such as (Unsupported device, Enumeration Fail) and the corre
 User is familiar with USB 2.0 "Universal Serial BUS" Specification and HID class Specification.
 
 #### <b>Known limitations</b>
+None
 
 ### <b>Notes</b>
 
@@ -88,9 +90,11 @@ User is familiar with USB 2.0 "Universal Serial BUS" Specification and HID class
 
     + The "tx_initialize_low_level.S" should be also modified to enable the "USE_DYNAMIC_MEMORY_ALLOCATION" flag.
 
+#### <b>USBX usage hints</b>
+
 ### <b>Keywords</b>
 
-Connectivity, USBX Host, ThreadX, USB, HID, Mouse, Keyboard, UART, USART,
+Connectivity, USBX Host, USBPD, ThreadX, USB, HID, Mouse, Keyboard, UART, USART,
 
 ### <b>Hardware and Software environment</b>
 
@@ -120,3 +124,8 @@ In order to make the program work, you must do the following :
  - Rebuild all files and load your image into target memory
  - Run the application
 
+<b>Note</b>
+
+The user has to check the list of the COM ports in Device Manager to find out the number 
+of the COM ports that have been assigned (by OS) to the Stlink VCP.
+The application uses the external HSE clock as USB source clock.

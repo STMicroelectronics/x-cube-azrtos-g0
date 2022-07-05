@@ -6,13 +6,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2018 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2018 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   */
@@ -258,12 +257,10 @@ typedef void (*pPCD_BcdCallbackTypeDef)(PCD_HandleTypeDef *hpcd, PCD_BCD_MsgType
   * @}
   */
 
-HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd,
-                                           HAL_PCD_CallbackIDTypeDef CallbackID,
+HAL_StatusTypeDef HAL_PCD_RegisterCallback(PCD_HandleTypeDef *hpcd, HAL_PCD_CallbackIDTypeDef CallbackID,
                                            pPCD_CallbackTypeDef pCallback);
 
-HAL_StatusTypeDef HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd,
-                                             HAL_PCD_CallbackIDTypeDef CallbackID);
+HAL_StatusTypeDef HAL_PCD_UnRegisterCallback(PCD_HandleTypeDef *hpcd, HAL_PCD_CallbackIDTypeDef CallbackID);
 
 HAL_StatusTypeDef HAL_PCD_RegisterDataOutStageCallback(PCD_HandleTypeDef *hpcd,
                                                        pPCD_DataOutStageCallbackTypeDef pCallback);
@@ -285,14 +282,10 @@ HAL_StatusTypeDef HAL_PCD_RegisterIsoInIncpltCallback(PCD_HandleTypeDef *hpcd,
 
 HAL_StatusTypeDef HAL_PCD_UnRegisterIsoInIncpltCallback(PCD_HandleTypeDef *hpcd);
 
-HAL_StatusTypeDef HAL_PCD_RegisterBcdCallback(PCD_HandleTypeDef *hpcd,
-                                              pPCD_BcdCallbackTypeDef pCallback);
-
+HAL_StatusTypeDef HAL_PCD_RegisterBcdCallback(PCD_HandleTypeDef *hpcd, pPCD_BcdCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_PCD_UnRegisterBcdCallback(PCD_HandleTypeDef *hpcd);
 
-HAL_StatusTypeDef HAL_PCD_RegisterLpmCallback(PCD_HandleTypeDef *hpcd,
-                                              pPCD_LpmCallbackTypeDef pCallback);
-
+HAL_StatusTypeDef HAL_PCD_RegisterLpmCallback(PCD_HandleTypeDef *hpcd, pPCD_LpmCallbackTypeDef pCallback);
 HAL_StatusTypeDef HAL_PCD_UnRegisterLpmCallback(PCD_HandleTypeDef *hpcd);
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 /**
@@ -331,16 +324,10 @@ void HAL_PCD_ISOINIncompleteCallback(PCD_HandleTypeDef *hpcd, uint8_t epnum);
 HAL_StatusTypeDef HAL_PCD_DevConnect(PCD_HandleTypeDef *hpcd);
 HAL_StatusTypeDef HAL_PCD_DevDisconnect(PCD_HandleTypeDef *hpcd);
 HAL_StatusTypeDef HAL_PCD_SetAddress(PCD_HandleTypeDef *hpcd, uint8_t address);
-HAL_StatusTypeDef HAL_PCD_EP_Open(PCD_HandleTypeDef *hpcd, uint8_t ep_addr,
-                                  uint16_t ep_mps, uint8_t ep_type);
-
+HAL_StatusTypeDef HAL_PCD_EP_Open(PCD_HandleTypeDef *hpcd, uint8_t ep_addr, uint16_t ep_mps, uint8_t ep_type);
 HAL_StatusTypeDef HAL_PCD_EP_Close(PCD_HandleTypeDef *hpcd, uint8_t ep_addr);
-HAL_StatusTypeDef HAL_PCD_EP_Receive(PCD_HandleTypeDef *hpcd, uint8_t ep_addr,
-                                     uint8_t *pBuf, uint32_t len);
-
-HAL_StatusTypeDef HAL_PCD_EP_Transmit(PCD_HandleTypeDef *hpcd, uint8_t ep_addr,
-                                      uint8_t *pBuf, uint32_t len);
-
+HAL_StatusTypeDef HAL_PCD_EP_Receive(PCD_HandleTypeDef *hpcd, uint8_t ep_addr, uint8_t *pBuf, uint32_t len);
+HAL_StatusTypeDef HAL_PCD_EP_Transmit(PCD_HandleTypeDef *hpcd, uint8_t ep_addr, uint8_t *pBuf, uint32_t len);
 HAL_StatusTypeDef HAL_PCD_EP_SetStall(PCD_HandleTypeDef *hpcd, uint8_t ep_addr);
 HAL_StatusTypeDef HAL_PCD_EP_ClrStall(PCD_HandleTypeDef *hpcd, uint8_t ep_addr);
 HAL_StatusTypeDef HAL_PCD_EP_Flush(PCD_HandleTypeDef *hpcd, uint8_t ep_addr);
@@ -540,7 +527,7 @@ PCD_StateTypeDef HAL_PCD_GetState(PCD_HandleTypeDef *hpcd);
   * @param  bEpNum channel Number.
   * @retval Counter value
   */
-__STATIC_INLINE uint16_t PCD_GET_EP_RX_CNT(PCD_TypeDef *Instance, uint16_t bEpNum)
+__STATIC_INLINE uint16_t PCD_GET_EP_RX_CNT(const PCD_TypeDef *Instance, uint16_t bEpNum)
 {
   UNUSED(Instance);
   __IO uint32_t count = 10U;
@@ -583,7 +570,7 @@ __STATIC_INLINE uint16_t PCD_GET_EP_RX_CNT(PCD_TypeDef *Instance, uint16_t bEpNu
   * @param  bEpNum channel Number.
   * @retval Counter value
   */
-__STATIC_INLINE uint16_t PCD_GET_EP_DBUF0_CNT(PCD_TypeDef *Instance, uint16_t bEpNum)
+__STATIC_INLINE uint16_t PCD_GET_EP_DBUF0_CNT(const PCD_TypeDef *Instance, uint16_t bEpNum)
 {
   UNUSED(Instance);
   __IO uint32_t count = 10U;
@@ -603,7 +590,7 @@ __STATIC_INLINE uint16_t PCD_GET_EP_DBUF0_CNT(PCD_TypeDef *Instance, uint16_t bE
   * @param  bEpNum channel Number.
   * @retval Counter value
   */
-__STATIC_INLINE uint16_t PCD_GET_EP_DBUF1_CNT(PCD_TypeDef *Instance, uint16_t bEpNum)
+__STATIC_INLINE uint16_t PCD_GET_EP_DBUF1_CNT(const PCD_TypeDef *Instance, uint16_t bEpNum)
 {
   UNUSED(Instance);
   __IO uint32_t count = 10U;
@@ -635,5 +622,3 @@ __STATIC_INLINE uint16_t PCD_GET_EP_DBUF1_CNT(PCD_TypeDef *Instance, uint16_t bE
 #endif
 
 #endif /* STM32G0xx_HAL_PCD_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

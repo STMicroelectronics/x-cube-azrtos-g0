@@ -11,6 +11,11 @@ the application creates 3 threads with the same priorities :
   - usbx_cdc_acm_read_thread_entry (Prio : 20; PreemptionPrio : 20) used to Read the received data from Virtual COM Port.
   - usbx_cdc_acm_write_thread_entry (Prio : 20; PreemptionPrio : 20) used to send the received data over UART.
 
+The thread usbx_app_thread_entry is responsible to start or stop the USB device.
+At Run mode the thread will be waiting on message queue form USB_PD interface, when the USB device is plugged to host PC
+a callback in USB_PD interface will send a message to usbx_app_thread_entry to start the USB device.
+By the same way when the USB device is unplug a callback in USB_PD interface will send a message to usbx_app_thread_entry to stop the USB device.
+
 During enumeration phase, three communication pipes "endpoints" are declared in the CDC class implementation :
 
  - 1 x Bulk IN endpoint for receiving data from STM32 device to PC host:
@@ -38,7 +43,7 @@ data at the same time it is transmitting another data (full- duplex feature).
 
 - The user has to check the list of the COM ports in Device Manager to find out the COM port number that have been assigned (by OS) to the VCP interface.
 - CDC ACM non-blocking transmission by default disabled, to enable non-blocking transmission UX_DEVICE_CLASS_CDC_ACM_TRANSMISSION_DISABLE must be disabled
-  and 2048 additional in USBX byte pool and USBX_MEMORY_SIZE.
+  and 2048 additional in USBX byte pool and USBX_MEMORY_SIZE should be added.
 #### <b>Expected success behavior</b>
 
 When plugged to PC host, the STM32G0C1E-EV must be properly enumerated as an USB Serial device and an STlink Com port.
@@ -65,8 +70,12 @@ None.
  - ThreadX uses the Systick as time base, thus it is mandatory that the HAL uses a separate time base through the TIM IPs.
  - ThreadX is configured with 100 ticks/sec by default, this should be taken into account when using delays or timeouts at application. It is always possible to reconfigure it in the "tx_user.h", the "TX_TIMER_TICKS_PER_SECOND" define,but this should be reflected in "tx_initialize_low_level.S" file too.
  - ThreadX is disabling all interrupts during kernel start-up to avoid any unexpected behavior, therefore all system related calls (HAL, BSP) should be done either at the beginning of the application or inside the thread entry functions.
- - ThreadX offers the "tx_application_define()" function, that is automatically called by the tx_kernel_enter() API. It is highly recommended to use it to create all applications ThreadX related resources (threads, semaphores, memory pools...) but it should not in any way contain a system API call (HAL or BSP).
- - ThreadX needs to know the first free memory block in the RAM to be used for resource allocations.
+ - ThreadX offers the "tx_application_define()" function, that is automatically called by the tx_kernel_enter() API.
+   It is highly recommended to use it to create all applications ThreadX related resources (threads, semaphores, memory pools...)  but it should not in any way contain a system API call (HAL or BSP).
+ - Using dynamic memory allocation requires to apply some changes to the linker file.
+   ThreadX needs to pass a pointer to the first free memory location in RAM to the tx_application_define() function,
+   using the "first_unused_memory" argument.
+   This require changes in the linker files to expose this memory location.
     + For EWARM add the following section into the .icf file:
      ```
 	 place in RAM_region    { last section FREE_MEM };

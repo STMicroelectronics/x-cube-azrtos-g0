@@ -99,6 +99,8 @@ int main(void)
   /* USER CODE END 2 */
 
   MX_ThreadX_Init();
+
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -122,6 +124,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1);
+
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
@@ -140,6 +143,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+
   /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
@@ -227,7 +231,19 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  * @param  None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the huart2 and Loop until the end of transmission */
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
 
+  return ch;
+}
 /* USER CODE END 4 */
 
 /**
@@ -268,20 +284,6 @@ void Error_Handler(void)
   /* USER CODE END Error_Handler_Debug */
 }
 
-/**
-  * @brief  Retargets the C library printf function to the USART.
-  * @param  None
-  * @retval None
-  */
-PUTCHAR_PROTOTYPE
-{
-  /* Place your implementation of fputc here */
-  /* e.g. write a character to the huart2 and Loop until the end of transmission */
-  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
-
-  return ch;
-}
-
 #ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
@@ -296,11 +298,5 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
-  /* Infinite loop */
-  while (1)
-  {
-  }
-  /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
